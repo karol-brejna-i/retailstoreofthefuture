@@ -15,6 +15,6 @@ WORKDIR /loader
 # install python requirements
 RUN pip install -r requirements.txt
 
-# run the script
+# run the scripts
 CMD ["python", "create_db.py"]
 CMD ["python", "load_data.py"]
