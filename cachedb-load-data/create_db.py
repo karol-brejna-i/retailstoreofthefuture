@@ -3,9 +3,9 @@ import os
 import psycopg
 
 # get the POSTGRES_USR, POSTGRES_PW, POSTGRES_DBdata from environment variables or use default values
-POSTGRES_USR = os.getenv('POSTGRES_USR', 'dupaStrongPass')
-POSTGRES_PW = os.getenv('POSTGRES_PW', 'dupa-db')
-POSTGRES_DB = os.getenv('POSTGRES_DB', 'dupa-db')
+POSTGRES_USR = os.getenv('POSTGRES_USR', 'cachedb_user')
+POSTGRES_PW = os.getenv('POSTGRES_PW', 'cachedb_pass')
+POSTGRES_DB = os.getenv('POSTGRES_DB', 'cachedb')
 POSTGRES_HST = os.getenv('POSTGRES_HST', 'localhost')
 DATA_PATH = os.getenv('DATA_PATH', 'data')
 # print out the values
@@ -33,14 +33,14 @@ COUPON_INFO_TABLE_DDL = \
     """
 CREATE TABLE coupon_info (
   coupon_id INT,
-  coupon_type REAL,
+  coupon_type VARCHAR(16),
   department VARCHAR(10),
   discount INT,
   how_many_products_required INT,
-  product_mean_price REAL,
-  products_available INT,
   start_date VARCHAR(10),
   end_date VARCHAR(10),
+  product_mean_price REAL,
+  products_available INT,
   PRIMARY KEY (coupon_id)
 );
 """
@@ -62,13 +62,14 @@ CREATE TABLE customer_info (
   gender VARCHAR(1),
   age INT,
   mean_buy_price REAL,
+  total_coupons_used INT,
+  mean_discount_received REAL,
   unique_products_bought INT,
   unique_products_bought_with_coupons INT,
-  total_items_bought INT,
-  mean_discount_received REAL,
-  total_coupons_used INT,
+  total_items_bought INT, 
   PRIMARY KEY (customer_id)
 );
+
 """
 
 LOAD_DATA_SQL = \
@@ -81,6 +82,8 @@ COPY customer_info FROM '{DATA_PATH}/customer_info.csv' DELIMITER ',' CSV HEADER
 
 
 def get_connection(db, user, password, host):
+    print(f"Connecting to database: {db}, {user}, {password}, {host}")
+
     return psycopg.connect(
         dbname=db,
         user=user,
@@ -88,10 +91,6 @@ def get_connection(db, user, password, host):
         host=host,
         autocommit=True
     )
-
-
-def create_table(table_name):
-    pass
 
 
 def drop_all(conn):
@@ -115,10 +114,10 @@ def create_database(conn):
 
 def create_tables(conn):
     cur = conn.cursor()
-    cur.execute(PRODUCT_INFO_TABLE_DDL)
-    cur.execute(COUPON_INFO_TABLE_DDL)
-    cur.execute(COUPON_PRODUCT_TABLE_DDL)
-    cur.execute(CUSTOMER_INFO_TABLE_DDL)
+    result = cur.execute(PRODUCT_INFO_TABLE_DDL)
+    result = cur.execute(COUPON_INFO_TABLE_DDL)
+    result = cur.execute(COUPON_PRODUCT_TABLE_DDL)
+    result = cur.execute(CUSTOMER_INFO_TABLE_DDL)
     cur.close()
 
 
@@ -129,12 +128,16 @@ def load_data(conn):
 
 
 if __name__ == '__main__':
+    # show current working directory
+    print(f"Current working directory: {os.getcwd()}")
+    # list all files in the current directory
+    print(f"Files in the current directory: {os.listdir()}")
+
     # connect to the default database
     db_connection = get_connection('postgres', POSTGRES_USR, POSTGRES_PW, POSTGRES_HST)
     print("Connection established")
     drop_all(db_connection)
-    # create_user(conn)
-    # print("User created")
+
     create_database(db_connection)
     print("Database created")
 
@@ -142,6 +145,3 @@ if __name__ == '__main__':
     db_connection = get_connection(POSTGRES_DB, POSTGRES_USR, POSTGRES_PW, POSTGRES_HST)
     create_tables(db_connection)
     print("Tables created")
-    load_data(db_connection)
-    print("Data loaded")
-    db_connection.close()
