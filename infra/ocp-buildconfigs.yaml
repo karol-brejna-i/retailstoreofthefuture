@@ -111,7 +111,7 @@ spec:
   lookupPolicy:
     local: false
 ---
-apiVersion: v1
+apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
   name: cachedb-loader
@@ -131,7 +131,7 @@ spec:
       kind: ImageStreamTag
       name: 'cachedb-loader:latest'
 ---
-apiVersion: v1
+apiVersion: image.openshift.io/v1
 kind: ImageStream
 metadata:
   name: cachedb-loader
