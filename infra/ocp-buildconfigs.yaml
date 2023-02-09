@@ -111,6 +111,34 @@ spec:
   lookupPolicy:
     local: false
 ---
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  name: cachedb-loader
+spec:
+  source:
+    type: Git
+    sourceSecret:
+      name: retail-git-ssh-key
+    git:
+      uri: 'git@github.com:karol-brejna-i/retailstoreofthefuture.git'
+      ref: develop
+    contextDir: cachedb-load-data/
+  strategy:
+    type: Docker
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'cachedb-loader:latest'
+---
+apiVersion: v1
+kind: ImageStream
+metadata:
+  name: cachedb-loader
+spec:
+  lookupPolicy:
+    local: false
+---
 apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
