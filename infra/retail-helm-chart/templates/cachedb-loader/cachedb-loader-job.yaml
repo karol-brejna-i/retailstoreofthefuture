@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "cachedbLoader.name" . }}
+  labels:
+    {{- include "cachedbLoader.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  parallelism: 1
+  completions: 1
+  backoffLimit: 6
+  template:
+    metadata:
+      name: {{ include "cachedbLoader.name" . }}
+      labels:
+        {{- include "cachedbLoader.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccount: {{ include "cachedbLoader.serviceAccountName" . }}
+      containers:
+      - name: cachedb-loader
+        image: {{ .Values.cachedbLoader.image }}
+        envFrom:
+        - secretRef:
+            name: {{ include "postgres.secretName" . }}
+        - configMapRef:
+            name: {{ include "postgres.configMapName" . }}
+        ports:
+        - containerPort: 5432
+      restartPolicy: Never
+      terminationGracePeriodSeconds: 30

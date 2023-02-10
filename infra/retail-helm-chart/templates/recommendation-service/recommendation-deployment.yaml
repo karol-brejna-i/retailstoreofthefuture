@@ -9,7 +9,7 @@ spec:
   replicas: {{ .Values.predictionService.replicas }}
   selector:
     matchLabels:
-    {{- include "recommendation.selectorLabels" . | nindent 6 }}
+    q{{- include "recommendation.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
