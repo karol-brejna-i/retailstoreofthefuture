@@ -26,21 +26,27 @@ oc get buildconfigs
 ```
 
 ```shell
-NAME                           TYPE     FROM             LATEST
-prediction-service-build       Docker   Git@develop-pl   0
-recommendation-service-build   Docker   Git@develop-pl   0
+NAME                            TYPE     FROM                LATEST
+cachedb-loader                  Docker   Git@init-cache-db   0
+customer-simulation-service     Docker   Git@develop-pl      0
+prediction-service              Docker   Git@develop-pl      0
+recommendation-service          Docker   Git@develop-pl      0
+visualization-service           Docker   Git@develop-pl      0
 ```
 
 Verify ImageTags have been created in your project:
 
 ```shell
-oc get is
+oc get imagestreams
 ```
 
 ```shell
-NAME                     IMAGE REPOSITORY                                                                                TAGS     UPDATED
-prediction-service       default-route-openshift-image-registry.apps.red.ocp.public/retail/prediction-service          
-recommendation-service   default-route-openshift-image-registry.apps.red.ocp.public/retail/recommendation-service      
+NAME                            IMAGE REPOSITORY                                                                                           TAGS     UPDATED
+cachedb-loader                  default-route-openshift-image-registry.apps.rojo.igk.internal/retail-infra/cachedb-loader
+customer-simulation-service     default-route-openshift-image-registry.apps.rojo.igk.internal/retail-infra/customer-simulation-service
+prediction-service              default-route-openshift-image-registry.apps.rojo.igk.internal/retail-infra/prediction-service
+recommendation-service          default-route-openshift-image-registry.apps.rojo.igk.internal/retail-infra/recommendation-service
+visualization-debug             default-route-openshift-image-registry.apps.rojo.igk.internal/retail-infra/visualization-debug
 ```
 
 Manually trigger the images builds:
@@ -50,10 +56,10 @@ oc start-build customer-simulation-service
 oc start-build prediction-service
 oc start-build recommendation-service
 oc start-build visualization-service
+oc start-build cachedb-loader
 ```
 
 Wait for the builds to complete:
-
 
 ```shell
 oc get builds --watch
@@ -61,22 +67,22 @@ oc get builds --watch
 
 ```shell
 NAME                             TYPE     FROM             STATUS    STARTED               DURATION
-prediction-service-build-1       Docker   Git@develop-pl   Running   5 seconds ago   
-prediction-service-build-1       Docker   Git@72d19cf      Running   12 seconds ago   
-recommendation-service-build-1   Docker   Git@develop-pl   Running   6 seconds ago    
-recommendation-service-build-1   Docker   Git@72d19cf      Running   15 seconds ago   
+prediction-service-build-1       Docker   Git@develop-pl   Running   5 seconds ago
+prediction-service-build-1       Docker   Git@72d19cf      Running   12 seconds ago
+recommendation-service-build-1   Docker   Git@develop-pl   Running   6 seconds ago   
+recommendation-service-build-1   Docker   Git@72d19cf      Running   15 seconds ago
 recommendation-service-build-1   Docker   Git@72d19cf      Running   About a minute ago   
 recommendation-service-build-1   Docker   Git@72d19cf      Running   About a minute ago   
-recommendation-service-build-1   Docker   Git@72d19cf      Complete   About a minute ago   1m21s
-prediction-service-build-1       Docker   Git@72d19cf      Running    About a minute ago   
-prediction-service-build-1       Docker   Git@72d19cf      Running    About a minute ago   
-prediction-service-build-1       Docker   Git@72d19cf      Complete   About a minute ago   1m45s
+recommendation-service-build-1   Docker   Git@72d19cf      Complete   About a minute ago
+prediction-service-build-1       Docker   Git@72d19cf      Running    About a minute ago
+prediction-service-build-1       Docker   Git@72d19cf      Running    About a minute ago
+prediction-service-build-1       Docker   Git@72d19cf      Complete   About a minute ago
 ```
 
 See if the ImageTags have been updated:
 
 ```shell
-oc get is
+oc get imagestreams
 ```
 
 ```shell

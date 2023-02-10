@@ -192,3 +192,7 @@ visualization:
     create: true
     # additional service account annotations
     annotations: { }
+
+cachedbLoader:
+  # TODO XXX: different namespace in image path (retail-infra instead of rsotf)
+  image: image-registry.openshift-image-registry.svc:5000/retail-infra/cachedb-loader

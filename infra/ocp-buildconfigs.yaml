@@ -122,7 +122,7 @@ spec:
       name: retail-git-ssh-key
     git:
       uri: 'git@github.com:karol-brejna-i/retailstoreofthefuture.git'
-      ref: develop
+      ref: init-cache-db
     contextDir: cachedb-load-data/
   strategy:
     type: Docker
