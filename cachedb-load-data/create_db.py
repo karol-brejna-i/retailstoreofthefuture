@@ -3,6 +3,7 @@ import os
 import psycopg
 
 # get the POSTGRES_USR, POSTGRES_PW, POSTGRES_DBdata from environment variables or use default values
+print("create_db.py: Getting environment variables")
 POSTGRES_USR = os.getenv('POSTGRES_USR', 'cacheUser')
 POSTGRES_PW = os.getenv('POSTGRES_PW', 'cachePass')
 POSTGRES_DB = os.getenv('POSTGRES_DB', 'cacheDb')

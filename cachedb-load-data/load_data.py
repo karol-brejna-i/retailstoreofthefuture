@@ -2,6 +2,7 @@ import os
 
 import psycopg
 
+print("load_data.py")
 # get the POSTGRES_USR, POSTGRES_PW, POSTGRES_DBdata from environment variables or use default values
 POSTGRES_USR = os.getenv('POSTGRES_USR', 'cacheUser')
 POSTGRES_PW = os.getenv('POSTGRES_PW', 'cachePass')
