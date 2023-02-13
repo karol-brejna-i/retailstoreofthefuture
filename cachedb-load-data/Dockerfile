@@ -7,16 +7,15 @@ ENV POSTGRES_PW="cachedb_pass"
 ENV POSTGRES_HST="localhost"
 ENV DATA_PATH="data"
 
-COPY requirements.txt create_db.py load_data.py /loader/
+COPY requirements.txt create_db.py load_data.py script.sh /loader/
 COPY data/ /loader/data/
 # set working directory
 WORKDIR /loader
 
 # install python requirements
 RUN pip install -r requirements.txt
+RUN chmod +x script.sh
 
 # run the scripts
-cmd ["echo", "Creating database"]
-CMD ["python", "create_db.py"]
-cmd ["echo", "Loading data"]
-CMD ["python", "load_data.py"]
+ENTRYPOINT ["bash", "-c", "/loader/script.sh"]
+
