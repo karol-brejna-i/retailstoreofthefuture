@@ -72,8 +72,14 @@ docker run -it --net=host \
   cachedb-load-data
 ```
 
+## Run the scripts in Kubernetes/OpenShift
+
+
 ## Future work
+
 Right now the scripts are using static data embedded in the image. 
 In the future we could add a script that downloads the data from a remote location.
 (They could be downloaded, for example, from a central config server.)
 
+For OpenShift usage, the helm charts could be updated to include the scripts and the data 
+(for example, as post-install job) and the image preparation can be done with build config.
