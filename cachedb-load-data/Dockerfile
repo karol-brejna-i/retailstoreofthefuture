@@ -18,4 +18,3 @@ RUN chmod +x script.sh
 
 # run the scripts
 ENTRYPOINT ["bash", "-c", "/loader/script.sh"]
-
