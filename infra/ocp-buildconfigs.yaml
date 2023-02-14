@@ -9,7 +9,7 @@ spec:
     sourceSecret:
       name: retail-git-ssh-key
     git:
-      uri: 'git@github.com:karol-brejna-i/retailstoreofthefuture.git'
+      uri: 'https://github.com/karol-brejna-i/retailstoreofthefuture.git'
       ref: develop
     contextDir: recommendation-service/
   strategy:
@@ -37,7 +37,7 @@ spec:
     sourceSecret:
       name: retail-git-ssh-key
     git:
-      uri: 'git@github.com:karol-brejna-i/retailstoreofthefuture.git'
+      uri: 'https://github.com/karol-brejna-i/retailstoreofthefuture.git'
       ref: develop
     contextDir: prediction-service/
   strategy:
@@ -65,7 +65,7 @@ spec:
     sourceSecret:
       name: retail-git-ssh-key
     git:
-      uri: 'git@github.com:karol-brejna-i/retailstoreofthefuture.git'
+      uri: 'https://github.com/karol-brejna-i/retailstoreofthefuture.git'
       ref: develop
     contextDir: visualization-app/
   strategy:
@@ -93,7 +93,7 @@ spec:
     sourceSecret:
       name: retail-git-ssh-key
     git:
-      uri: 'git@github.com:karol-brejna-i/retailstoreofthefuture.git'
+      uri: 'https://github.com/karol-brejna-i/retailstoreofthefuture.git'
       ref: develop
     contextDir: scenario-player/
   strategy:
@@ -121,7 +121,7 @@ spec:
     sourceSecret:
       name: retail-git-ssh-key
     git:
-      uri: 'git@github.com:karol-brejna-i/retailstoreofthefuture.git'
+      uri: 'https://github.com/karol-brejna-i/retailstoreofthefuture.git'
       ref: init-cache-db
     contextDir: cachedb-load-data/
   strategy:
