@@ -73,7 +73,16 @@ docker run -it --net=host \
 ```
 
 ## Run the scripts in Kubernetes/OpenShift
+The scripts can be run in Kubernetes/OpenShift using a job.
+Example job definition is in [cachedb-load-data-job.yaml](./cachedb-load-data-job.yaml).
+    
+Update the env variables in the job definition to match your environment, including
+postgres service name, username, password and database name.
 
+Then you can run the job:
+```bash
+kubectl apply -f cachedb-load-data-job.yaml
+```
 
 ## Future work
 
