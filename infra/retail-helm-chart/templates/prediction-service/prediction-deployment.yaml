@@ -28,7 +28,7 @@ spec:
         {{- end }}
         ports:
         - containerPort: 80
-        redinessProbe:
+        readinessProbe:
           tcpSocket:
             port: 80
             initialDelaySeconds: 5
