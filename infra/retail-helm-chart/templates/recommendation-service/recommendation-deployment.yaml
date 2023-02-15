@@ -9,11 +9,11 @@ spec:
   replicas: {{ .Values.predictionService.replicas }}
   selector:
     matchLabels:
-    q{{- include "recommendation.selectorLabels" . | nindent 6 }}
+      {{- include "recommendation.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-      {{- include "recommendation.selectorLabels" . | nindent 8 }}
+        {{- include "recommendation.selectorLabels" . | nindent 8 }}
     spec:
       serviceAccount: {{include "recommendation.serviceAccountName" . }}
       containers:
