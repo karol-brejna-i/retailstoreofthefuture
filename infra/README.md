@@ -81,12 +81,16 @@ oc get imagestreams
 ```
 
 ```shell
-NAME                     IMAGE REPOSITORY                                                                           TAGS     UPDATED
-prediction-service       default-route-openshift-image-registry.apps.red.ocp.public/retail/prediction-service       latest   1 minutes ago
-recommendation-service   default-route-openshift-image-registry.apps.red.ocp.public/retail/recommendation-service   latest   1 minutes ago
+NAME                          IMAGE REPOSITORY                                                                                  TAGS     UPDATED
+cachedb-loader                default-route-openshift-image-registry.apps.rojo.igk.internal/rsotf/cachedb-loader                latest   16 minutes ago
+customer-simulation-service   default-route-openshift-image-registry.apps.rojo.igk.internal/rsotf/customer-simulation-service   latest   16 minutes ago
+prediction-service            default-route-openshift-image-registry.apps.rojo.igk.internal/rsotf/prediction-service            latest   16 minutes ago
+recommendation-service        default-route-openshift-image-registry.apps.rojo.igk.internal/rsotf/recommendation-service        latest   16 minutes ago
+visualization-service         default-route-openshift-image-registry.apps.rojo.igk.internal/rsotf/visualization-service         latest   16 minutes ago
 ```
 
 ## Deploy the solution using Helm Charts
+
 Edit the `values.yaml` file and configure your workload parameters:
 
 ```shell

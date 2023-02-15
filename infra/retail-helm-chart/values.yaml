@@ -101,7 +101,7 @@ recommendationService:
   # see: auto.offset.reset setting in Kafka, default: "latest"
   # autoOffsetReset: "latest"
   
-  # time spent waiting for messages in in poll (s), default: 0.1
+  # time spent waiting for messages in poll (s), default: 0.1
   # pollTimeout: 0.1
   
   # fastAPI environment variables, see https://github.com/tiangolo/uvicorn-gunicorn-fastapi-docker for reference
@@ -194,8 +194,7 @@ visualization:
     annotations: { }
 
 cachedbLoader:
-  # TODO XXX: different namespace in image path (retail-infra instead of rsotf)
-  image: image-registry.openshift-image-registry.svc:5000/retail-infra/cachedb-loader
+  image: image-registry.openshift-image-registry.svc:5000/rsotf/cachedb-loader
 
 decisionService:
   # decision service docker image
