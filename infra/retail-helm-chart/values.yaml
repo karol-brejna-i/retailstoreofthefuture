@@ -188,13 +188,14 @@ visualization:
   # servicePort: 8080
 
   serviceAccount:
-    # create separate service account for customer simulation service
     create: true
-    # additional service account annotations
     annotations: { }
 
 cachedbLoader:
   image: image-registry.openshift-image-registry.svc:5000/rsotf/cachedb-loader
+  serviceAccount:
+    create: true
+    annotations: { }
 
 decisionService:
   # decision service docker image
