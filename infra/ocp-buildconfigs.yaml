@@ -6,8 +6,6 @@ metadata:
 spec:
   source:
     type: Git
-    sourceSecret:
-      name: retail-git-ssh-key
     git:
       uri: 'https://github.com/karol-brejna-i/retailstoreofthefuture.git'
       ref: develop
@@ -34,8 +32,6 @@ metadata:
 spec:
   source:
     type: Git
-    sourceSecret:
-      name: retail-git-ssh-key
     git:
       uri: 'https://github.com/karol-brejna-i/retailstoreofthefuture.git'
       ref: develop
@@ -62,8 +58,6 @@ metadata:
 spec:
   source:
     type: Git
-    sourceSecret:
-      name: retail-git-ssh-key
     git:
       uri: 'https://github.com/karol-brejna-i/retailstoreofthefuture.git'
       ref: develop
@@ -90,8 +84,6 @@ metadata:
 spec:
   source:
     type: Git
-    sourceSecret:
-      name: retail-git-ssh-key
     git:
       uri: 'https://github.com/karol-brejna-i/retailstoreofthefuture.git'
       ref: develop
@@ -118,8 +110,6 @@ metadata:
 spec:
   source:
     type: Git
-    sourceSecret:
-      name: retail-git-ssh-key
     git:
       uri: 'https://github.com/karol-brejna-i/retailstoreofthefuture.git'
       ref: init-cache-db

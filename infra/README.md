@@ -6,12 +6,7 @@
 * [Deploy the solution using Helm Charts](#deploy-the-solution-using-helm-charts)
 
 ## Building images on Openshift Container Platform
-
-If you require private repository access you must create a secret containing Github Deploy Key
-
-```shell
-oc create secret generic retail-git-ssh-key --from-file=ssh-privatekey=<path_to_private_key> --type=kubernetes.io/ssh-auth
-```
+Build configs and image streams definitions are stored in [ocp-buildconfigs.yaml](ocp-buildconfigs.yaml).
 
 Create BuildConfigs and ImageTags: 
 
@@ -155,4 +150,41 @@ imagestream.image.openshift.io/recommendation-service   default-route-openshift-
 NAME                                               HOST/PORT                                                 PATH   SERVICES             PORT                  TERMINATION   WILDCARD                                                                                                                                        
 route.route.openshift.io/prediction-external       prediction-external-retail.apps.red.ocp.public              prediction-svc       prediction-port                     None                                                                                                                                            
 route.route.openshift.io/recommendation-external   recommendation-external-retail.apps.red.ocp.public          recommendation-svc   recommendation-port                 None      
+```
+
+## Notes
+
+### Using private GitHub repository
+
+Please, note, that if you require private repository access, you must create a secret containing GitHub deploy key
+(see https://docs.github.com/en/authentication/connecting-to-github-with-ssh/managing-deploy-keys for details 
+on managing deploy keys).
+
+The the key could be stored as a secret:
+
+```shell
+oc create secret generic retail-git-ssh-key --from-file=ssh-privatekey=<path_to_private_key> --type=kubernetes.io/ssh-auth
+```
+
+And used in build config definition:
+```yaml
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: prediction-service
+spec:
+  source:
+    type: Git
+    sourceSecret:                                       # use the secret
+      name: retail-git-ssh-key
+    git:
+      uri: 'https://github.com/karol-brejna-i/retailstoreofthefuture.git'
+      ref: develop
+    contextDir: prediction-service/
+  strategy:
+    type: Docker
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'prediction-service:latest'
 ```
