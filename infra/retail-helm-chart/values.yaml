@@ -72,7 +72,7 @@ postgres:
 
   serviceAccount:
     # create separate service account for postgres
-    create: true
+    create: false
     # additional service account annotations
     annotations: { }
 
@@ -114,7 +114,7 @@ recommendationService:
 
   serviceAccount:
     # create separate service account for recommendation service
-    create: true
+    create: false
     # additional service account annotations
     annotations: { }
   
@@ -144,7 +144,7 @@ predictionService:
 
   serviceAccount:
     # create separate service account for prediction service
-    create: true
+    create: false
     # additional service account annotations
     annotations: { }
 
@@ -166,7 +166,7 @@ customerSimulationService:
 
   serviceAccount:
     # create separate service account for customer simulation service
-    create: true
+    create: false
     # additional service account annotations
     annotations: { }
 
@@ -189,15 +189,14 @@ visualization:
   # servicePort: 8080
 
   serviceAccount:
-    create: true
+    create: false
     annotations: { }
 
 cachedbLoader:
   image: image-registry.openshift-image-registry.svc:5000/rsotf/cachedb-loader
   serviceAccount:
-    create: true
+    create: false
     annotations: { }
-
 decisionService:
   # decision service docker image
   image: image-registry.openshift-image-registry.svc:5000/rsotf/decision-service:latest
