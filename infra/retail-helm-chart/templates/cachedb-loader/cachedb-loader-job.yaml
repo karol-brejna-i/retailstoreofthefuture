@@ -22,6 +22,26 @@ spec:
       containers:
       - name: cachedb-loader
         image: {{ .Values.cachedbLoader.image }}
+        env:
+          - name: POSTGRES_DB
+            valueFrom:
+              configMapKeyRef:
+                name: { { include "postgres.configMapName" . } }
+                key: POSTGRES_DB
+          - name: POSTGRES_PW
+            valueFrom:
+              secretKeyRef:
+                name: { { include "postgres.secretName"  . } }
+                key: POSTGRES_PASSWORD
+          - name: POSTGRES_USR
+            valueFrom:
+              secretKeyRef:
+                name: { { include "postgres.secretName" . } }
+                key: POSTGRES_USER
+          - name: POSTGRES_HST
+            value: { { include "postgres.serviceName" . } }
+          - name: DB_PORT
+            value: { { include "postgres.servicePort" . | toString | quote } }
         envFrom:
         - secretRef:
             name: {{ include "postgres.secretName" . }}
