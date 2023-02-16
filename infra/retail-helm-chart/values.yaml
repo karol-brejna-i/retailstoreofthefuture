@@ -177,6 +177,7 @@ customerSimulationService:
   # override the default customer lit file location: /app/app/resources/customers.json
   # customersListFile: ""
 
+# TODO other components use "service" postfix
 visualization:
   # visualization simulation service docker image
   image: image-registry.openshift-image-registry.svc:5000/rsotf/visualization-service:latest

@@ -2,7 +2,7 @@
 Expand the name of the chart.
 */}}
 {{- define "cachedbLoader.name" -}}
-{{- .Values.cachedbLoader.nameOverride| default "cachedb-loader" | trunc 63 | trimSuffix "-" }}
+{{- .Values.cachedbLoader.nameOverride | default "cachedb-loader" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
