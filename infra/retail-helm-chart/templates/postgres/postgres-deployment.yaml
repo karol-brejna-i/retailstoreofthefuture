@@ -3,16 +3,16 @@ kind: Deployment
 metadata:
   name: {{ include "postgres.name" . }}
   labels:
-    {{ - include "postgres.labels" . | nindent 4 }}
+    {{- include "postgres.labels" . | nindent 4 }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      {{ - include "postgres.selectorLabels" . | nindent 6 }}
+      {{- include "postgres.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{ - include "postgres.selectorLabels" . | nindent 8 }}
+        {{- include "postgres.selectorLabels" . | nindent 8 }}
     spec:
       serviceAccount: {{ include "postgres.serviceAccountName" . }}
       containers:
