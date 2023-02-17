@@ -8,7 +8,7 @@ openshift: true
 globalInfra:
   kafka:
     bootstrapServers:
-      - retail-kafka-kafka-bootstrap.retail-infra.svc.cluster.local:9092
+      - retail-store-kafka-bootstrap.retail-infra.svc.cluster.local:9092
     
     # Kafka topic name for entry events
     entryEventTopic: "entryTopic"
@@ -36,7 +36,7 @@ globalInfra:
     password: password
 
     # name or IP address of the MQTT broker 
-    brokerServer: ex-aao-mqtt-notls-0-svc.retail-infra.svc.cluster.locals
+    brokerServer: ex-aao-mqtt-0-svc.retail-infra.svc.cluster.local
     
     # port that MQTT broker is listening on, default: 1883
     brokerPort: 1883
