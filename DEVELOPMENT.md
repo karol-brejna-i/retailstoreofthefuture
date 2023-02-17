@@ -88,7 +88,7 @@ You may need this setup to test:
 
 #### Setup
 
-To **run the container** with mosquitto borker:
+To **run the container** with mosquitto broker:
 
 ```shell
 docker run -d --rm --name mosquitto -p 1883:1883 eclipse-mosquitto

@@ -1,9 +1,23 @@
 # Build and deployment
 
 ## Table of contents
-
+* [Prerequisites](#prerequisites)
 * [Building images on Openshift Container Platform](#building-images-on-openshift-container-platform)
 * [Deploy the solution using Helm Charts](#deploy-the-solution-using-helm-charts)
+
+## Prerequisites
+This instruction assumes that you have access to an Openshift Container Platform, 
+and that you have the `oc` command line tool installed and configured to connect to your cluster.
+
+In addition, you need to have the following components installed in your cluster:
+* Kafka Broker
+* MQTT Broker
+
+Please, take a look at [KAFKA_MQTT.md](KAFKA_MQTT.md) for instructions on how to install them
+if operators for AMQ Streams and AMQ Broker (Red Hat Integration) are installed.
+
+Kafka and MQTT brokers addressees are configured in [values.yaml](../helm/retail-infra/values.yaml) file, 
+so remember to update them.
 
 ## Building images on Openshift Container Platform
 Build configs and image streams definitions are stored in [ocp-buildconfigs.yaml](ocp-buildconfigs.yaml).
