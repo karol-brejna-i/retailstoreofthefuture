@@ -84,7 +84,7 @@ recommendationService:
   image: image-registry.openshift-image-registry.svc:5000/rsotf/recommendation-service:latest
   
   # number of recommendation service replicas
-  replicas: 2
+  replicas: 1
 
   # recommendation service type, default: ClusterIP
   # serviceType: ClusterIP
@@ -126,7 +126,7 @@ predictionService:
   image: image-registry.openshift-image-registry.svc:5000/rsotf/prediction-service:latest
   
   # number of prediction service replicas
-  replicas: 2
+  replicas: 1
 
   # prediction service type, default: ClusterIP
   # serviceType: NodePort
