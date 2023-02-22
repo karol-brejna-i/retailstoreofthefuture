@@ -20,10 +20,10 @@ spec:
       - name: decision-service
         image: {{ .Values.decisionService.image }}
         env:
-        {{- if and .Values.decisionService.fastApi  }}
-        {{- range .Values.decisionService.fastApi.env }}
+        {{- if and .Values.decisionService.arguments  }}
+        {{- range .Values.decisionService.arguments }}
         - name: {{ .name }}
-          value: {{ .value | quote}}
+          value: {{ tpl .value $ }}
         {{- end }}
         {{- end }}
         ports:
