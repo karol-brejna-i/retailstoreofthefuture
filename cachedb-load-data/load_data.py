@@ -3,7 +3,6 @@ import os
 import psycopg
 
 print("load_data.py")
-# get the POSTGRES_USR, POSTGRES_PW, POSTGRES_DBdata from environment variables or use default values
 POSTGRES_USR = os.getenv('POSTGRES_USR', 'cacheUser')
 POSTGRES_PW = os.getenv('POSTGRES_PW', 'cachePass')
 POSTGRES_DB = os.getenv('POSTGRES_DB', 'cacheDb')
@@ -24,9 +23,11 @@ TABLE_NAMES = [
 
 TABLE_COLUMNS_STRING = {
     'product_info': 'product_id, name, category, sizes, vendor, description, buy_price, department',
-    'coupon_info': 'coupon_id, coupon_type, department, discount, how_many_products_required, start_date, end_date, product_mean_price, products_available',
+    'coupon_info': 'coupon_id, coupon_type, department, discount, ' +
+                   'how_many_products_required, start_date, end_date, product_mean_price, products_available',
     'coupon_product': 'coupon_id, product_id',
-    'customer_info': 'customer_id, gender, age, mean_buy_price, total_coupons_used, mean_discount_received, unique_products_bought, unique_products_bought_with_coupons, total_items_bought'
+    'customer_info': 'customer_id, gender, age, mean_buy_price, total_coupons_used, mean_discount_received, ' +
+                     'unique_products_bought, unique_products_bought_with_coupons, total_items_bought'
 }
 
 

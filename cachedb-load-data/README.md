@@ -17,7 +17,6 @@ The python scripts use the following environment variables:
 * `POSTGRES_DB` -- cachedb database name
 * `POSTGRES_HST` -- postgres host
 
-
 ## Local development
 Run Postgres in a Docker container:
 ```bash

@@ -97,7 +97,6 @@ def get_connection(db, user, password, host):
 def drop_all(conn):
     cur = conn.cursor()
     cur.execute(f'DROP DATABASE IF EXISTS "{POSTGRES_DB}"')
-    # cur.execute(f'DROP USER IF EXISTS "{POSTGRES_USR}"')
     cur.close()
 
 
