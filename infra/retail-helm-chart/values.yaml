@@ -197,6 +197,7 @@ cachedbLoader:
   serviceAccount:
     create: false
     annotations: { }
+
 decisionService:
   # decision service docker image
   image: image-registry.openshift-image-registry.svc:5000/rsotf/decision-service:latest
@@ -222,6 +223,6 @@ decisionService:
 
   serviceAccount:
     # create separate service account for decision service
-    create: true
+    create: false
     # additional service account annotations
-    annotations: {}
+    annotations: { }

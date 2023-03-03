@@ -55,7 +55,7 @@ cachedb-loader                  default-route-openshift-image-registry.apps.rojo
 customer-simulation-service     default-route-openshift-image-registry.apps.rojo.igk.internal/retail-infra/customer-simulation-service
 prediction-service              default-route-openshift-image-registry.apps.rojo.igk.internal/retail-infra/prediction-service
 recommendation-service          default-route-openshift-image-registry.apps.rojo.igk.internal/retail-infra/recommendation-service
-visualization-debug             default-route-openshift-image-registry.apps.rojo.igk.internal/retail-infra/visualization-debug
+visualization                   default-route-openshift-image-registry.apps.rojo.igk.internal/retail-infra/visualization
 ```
 
 Manually trigger the images builds:
@@ -178,7 +178,7 @@ Please, note, that if you require private repository access, you must create a s
 (see https://docs.github.com/en/authentication/connecting-to-github-with-ssh/managing-deploy-keys for details 
 on managing deploy keys).
 
-The the key could be stored as a secret:
+The key could be stored as a secret:
 
 ```shell
 oc create secret generic retail-git-ssh-key --from-file=ssh-privatekey=<path_to_private_key> --type=kubernetes.io/ssh-auth
