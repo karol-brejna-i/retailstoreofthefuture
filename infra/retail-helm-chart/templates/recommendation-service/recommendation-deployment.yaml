@@ -45,36 +45,14 @@ spec:
           value: {{ .value | quote }}
         {{- end }}
         {{- end }}
-        {{- if not .Values.recommendationService.testingNoKafka }}
         - name: FOCUS_EVENT_TOPIC_NAME
           value: {{ .Values.globalInfra.kafka.focusEventTopic | quote }}
         - name: ENTRY_EVENT_TOPIC_NAME
           value: {{ .Values.globalInfra.kafka.entryEventTopic | quote }}
         - name: COUPON_PREDICTION_TOPIC_NAME
           value: {{ .Values.globalInfra.kafka.couponPredictionTopic | quote }}
-        {{- end }}
         - name: COUPON_SCORER_URL
           value: {{ printf "http://%s:%s" (include "prediction.serviceName" .) (include "prediction.servicePort" .) | quote }}
-        {{- if .Values.globalInfra.kafka.bootstrapServers }}
-        - name: BOOTSTRAP_SERVERS
-          value: {{ join "," .Values.globalInfra.kafka.bootstrapServers | quote }}
-        {{- end }}
-        {{- if .Values.recommendationService.kafkaClientId }}
-        - name: CLIENT_ID
-          value: {{ .Values.recommendationService.kafkaClientId | quote }}
-        {{- end }}
-        {{- if .Values.recommendationService.kafkaGroupId }}
-        - name: GROUP_ID
-          value: {{  .Values.recommendationService.kafkaGroupId | quote }}
-        {{- end }}
-        {{- if .Values.recommendationService.pollTimeout }}
-        - name: POLL_TIMEOUT
-          value: {{  .Values.recommendationService.pollTimeout | quote }}
-        {{- end }}
-        {{- if .Values.recommendationService.pollTimeout }}
-        - name: AUTO_OFFSET_RESET
-          value: {{  .Values.recommendationService.autoOffsetReset | quote }}
-        {{- end }}
         ports:
         - containerPort: 80
         readinessProbe:

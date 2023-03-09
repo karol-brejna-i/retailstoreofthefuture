@@ -50,6 +50,15 @@ globalInfra:
     # MQTT topic for exit events
     exitTopic: "retail/mqttExitTopic"
 
+    # MQTT topic for focus events
+    focusTopic: "retail/mqttFocusTopic"
+
+    # MQTT topic for customer browsing events
+    browseTopic: "retail/mqttBrowseTopic"
+
+    # MQTT topic for prediction results
+    couponsTopic: "retail/mqttCouponsTopic"
+
 
 postgres:
   # postgres image used for cache 
