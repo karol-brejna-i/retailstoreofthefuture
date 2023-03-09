@@ -81,17 +81,21 @@ oc get builds --watch
 ```
 
 ```shell
-NAME                             TYPE     FROM             STATUS    STARTED               DURATION
-prediction-service-build-1       Docker   Git@develop-pl   Running   5 seconds ago
-prediction-service-build-1       Docker   Git@72d19cf      Running   12 seconds ago
-recommendation-service-build-1   Docker   Git@develop-pl   Running   6 seconds ago   
-recommendation-service-build-1   Docker   Git@72d19cf      Running   15 seconds ago
-recommendation-service-build-1   Docker   Git@72d19cf      Running   About a minute ago   
-recommendation-service-build-1   Docker   Git@72d19cf      Running   About a minute ago   
-recommendation-service-build-1   Docker   Git@72d19cf      Complete   About a minute ago
-prediction-service-build-1       Docker   Git@72d19cf      Running    About a minute ago
-prediction-service-build-1       Docker   Git@72d19cf      Running    About a minute ago
-prediction-service-build-1       Docker   Git@72d19cf      Complete   About a minute ago
+NAME                            TYPE     FROM          STATUS    STARTED         DURATION
+cachedb-loader-1                Docker   Git@develop   Running   9 seconds ago
+customer-simulation-service-1   Docker   Git@develop   Running   9 seconds ago
+decision-service-build-1        Source   Git@a001c2c   Running   9 seconds ago
+prediction-service-1            Docker   Git@develop   Running   9 seconds ago
+recommendation-service-1        Docker   Git@develop   Running   9 seconds ago
+visualization-service-1         Docker   Git@develop   Running   7 seconds ago
+customer-simulation-service-1   Docker   Git@04bcf6f   Running   11 seconds ago
+prediction-service-1            Docker   Git@04bcf6f   Running   12 seconds ago
+cachedb-loader-1                Docker   Git@04bcf6f   Running   14 seconds ago
+visualization-service-1         Docker   Git@04bcf6f   Running   13 seconds ago
+recommendation-service-1        Docker   Git@04bcf6f   Running   16 seconds ago
+cachedb-loader-1                Docker   Git@04bcf6f   Running   59 seconds ago
+cachedb-loader-1                Docker   Git@04bcf6f   Running   59 seconds ago
+cachedb-loader-1                Docker   Git@04bcf6f   Complete   About a minute ago   1m3s
 ```
 
 See if the ImageTags have been updated:
