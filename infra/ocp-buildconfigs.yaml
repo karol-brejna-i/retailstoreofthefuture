@@ -135,7 +135,6 @@ metadata:
   labels:
     build: decision-service-build
   name: decision-service-build
-  namespace: s2i-test
 spec:
   output:
     to:
