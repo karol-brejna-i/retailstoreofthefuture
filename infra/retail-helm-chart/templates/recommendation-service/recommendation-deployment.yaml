@@ -45,6 +45,8 @@ spec:
           value: {{ .value | quote }}
         {{- end }}
         {{- end }}
+        - name: COUPON_SCORER_URL
+          value: {{ printf "http://%s:%s" (include "prediction.serviceName" .) (include "prediction.servicePort" .) | quote }}
         {{- if .Values.globalInfra.mqtt.brokerServer }}
         - name: MQTT_HOST
           value: {{  .Values.globalInfra.mqtt.brokerServer | quote }}
@@ -57,13 +59,13 @@ spec:
         - name: ENTER_TOPIC
           value: {{  .Values.globalInfra.mqtt.enterTopic | quote }}
         {{- end }}
-        {{- if .Values.globalInfra.mqtt.moveTopic }}
-        - name: MOVE_TOPIC
-          value: {{  .Values.globalInfra.mqtt.moveTopic | quote }}
+        {{- if .Values.globalInfra.mqtt.focusTopic }}
+        - name: FOCUS_TOPIC
+          value: {{  .Values.globalInfra.mqtt.focusTopic | quote }}
         {{- end }}
-        {{- if .Values.globalInfra.mqtt.exitTopic }}
-        - name: EXIT_TOPIC
-          value: {{  .Values.globalInfra.mqtt.exitTopic | quote }}
+        {{- if .Values.globalInfra.mqtt.couponsTopic }}
+        - name: COUPON_PREDICTION_TOPIC
+          value: {{  .Values.globalInfra.mqtt.couponsTopic | quote }}
         {{- end }}
         {{- if .Values.globalInfra.mqtt.sslEnabled }}
         - name: MQTT_BROKER_CERT_FILE
@@ -80,14 +82,6 @@ spec:
           readOnly: true
           mountPath: /certs
         {{- end }}
-        - name: FOCUS_EVENT_TOPIC_NAME
-          value: {{ .Values.globalInfra.kafka.focusEventTopic | quote }}
-        - name: ENTRY_EVENT_TOPIC_NAME
-          value: {{ .Values.globalInfra.kafka.entryEventTopic | quote }}
-        - name: COUPON_PREDICTION_TOPIC_NAME
-          value: {{ .Values.globalInfra.kafka.couponPredictionTopic | quote }}
-        - name: COUPON_SCORER_URL
-          value: {{ printf "http://%s:%s" (include "prediction.serviceName" .) (include "prediction.servicePort" .) | quote }}
         ports:
         - containerPort: 80
         readinessProbe:
