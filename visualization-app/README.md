@@ -57,18 +57,18 @@ This application assumes running MQTT broker.
 
 The service reads the following **environment variables**:
 
-| Variable                          | Description                                                                                      |                      Default |
-|-----------------------------------|--------------------------------------------------------------------------------------------------|-----------------------------:|
-| MQTT_HOST                         |                                                                                                  |                            - |
-| MQTT_PORT                         |                                                                                                  |                         1883 |
-| MQTT_NAME                         |                                                                                                  |                demoVisClient |
-| MQTT_PASSWORD                     |                                                                                                  |                              |
-| ENTER_TOPIC                       |                                                                                                  |               customer/enter |
-| MOVE_TOPIC                        |                                                                                                  |                customer/move |
-| EXIT_TOPIC                        |                                                                                                  |                customer/exit |
-| CUSTOMER_BROWSING_TOPIC           |                                                                                                  |            customer/browsing |
-| COUPON_PREDICTION_TOPIC_NAME      |                                                                                                  |            customer/browsing |
-| SCENARIO_PLAYER_SCENARIO_ENDPOINT | full address (ex: `http://localhost:8004/scenario`) to the scenario-player's `scenario` endpoint |                            - |
+| Variable                          | Description                                                                                      |                   Default |
+|-----------------------------------|--------------------------------------------------------------------------------------------------|--------------------------:|
+| MQTT_HOST                         |                                                                                                  |                         - |
+| MQTT_PORT                         |                                                                                                  |                      1883 |
+| MQTT_NAME                         |                                                                                                  |             demoVisClient |
+| MQTT_PASSWORD                     |                                                                                                  |                           |
+| ENTER_TOPIC                       |                                                                                                  |            customer/enter |
+| MOVE_TOPIC                        |                                                                                                  |             customer/move |
+| EXIT_TOPIC                        |                                                                                                  |             customer/exit |
+| BROWSING_TOPIC                    |                                                                                                  |         customer/browsing |
+| COUPON_PREDICTION_TOPIC           |                                                                                                  |       customer/prediction |
+| SCENARIO_PLAYER_SCENARIO_ENDPOINT | full address (ex: `http://localhost:8004/scenario`) to the scenario-player's `scenario` endpoint |                         - |
 
 (Parameters with `-` in "Default" column are required.)
 
@@ -128,7 +128,7 @@ Now start the simulation.
 ## To do
 * describe the usage of certificates (MQTT_BROKER_CERT_FILE)
 * explain usage of the CUSTOMERS_LIST_FILE, COUPONS_LIST_FILE parameters (or remove them)
-* add CUSTOMER_BROWSING_TOPIC, COUPON_PREDICTION_TOPIC_NAME to "App interfaces" section (and explain its usage)
+* add BROWSING_TOPIC, COUPON_PREDICTION_TOPIC to "App interfaces" section (and explain its usage)
 * add env variables descriptions in "Service configuration" section
 * update "Production" section to be more specific 
   (possibly, remove OpenShift references as the service can be run in any environment)

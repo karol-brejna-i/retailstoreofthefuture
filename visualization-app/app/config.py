@@ -25,10 +25,8 @@ MQTT_BROKER_CERT_FILE = os.getenv('MQTT_BROKER_CERT_FILE', None)
 CUSTOMER_ENTER_TOPIC = os.getenv('ENTER_TOPIC', 'customer/enter')
 CUSTOMER_EXIT_TOPIC = os.getenv('EXIT_TOPIC', 'customer/exit')
 CUSTOMER_MOVE_TOPIC = os.getenv('MOVE_TOPIC', 'customer/move')
-# TODO previous topic constans don't use "customer_" prefix, this one does. Should be unified.
-CUSTOMER_BROWSING_TOPIC = os.getenv('CUSTOMER_BROWSING_TOPIC', 'customer/browsing')
-# TODO previous topic constans don't use "_name" suffix, this one does. Should be unified.
-COUPON_PREDICTION_TOPIC_NAME = os.getenv('COUPON_PREDICTION_TOPIC_NAME', 'customer/prediction')
+CUSTOMER_BROWSING_TOPIC = os.getenv('BROWSING_TOPIC', 'customer/browsing')
+COUPON_PREDICTION_TOPIC = os.getenv('COUPON_PREDICTION_TOPIC', 'customer/prediction')
 
 SCENARIO_PLAYER_SCENARIO_ENDPOINT = os.getenv('SCENARIO_PLAYER_SCENARIO_ENDPOINT')
 
