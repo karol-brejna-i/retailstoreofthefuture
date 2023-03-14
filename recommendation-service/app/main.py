@@ -51,7 +51,7 @@ async def mock_entry_event(event: EntryEvent) -> Optional[str]:
     logger.info('mock_entry_event')
     logger.debug(event)
 
-    result = await customer_enters(None, config.ENTER_TOPIC, event.json().encode(), None, None)
+    result = await customer_enters(None, config.ENTER_TOPIC, event.json(by_alias=True).encode(), None, None)
 
     return PlainTextResponse(str(result))
 
@@ -64,7 +64,7 @@ async def mock_focus_event(event: FocusEvent) -> Optional[str]:
     logger.info('mock_entry_event')
     logger.debug(event)
 
-    result = await customer_focuses(None, config.FOCUS_TOPIC, event.json().encode(), None, None)
+    result = await customer_focuses(None, config.FOCUS_TOPIC, event.json(by_alias=True).encode(), None, None)
 
     return PlainTextResponse(str(result))
 

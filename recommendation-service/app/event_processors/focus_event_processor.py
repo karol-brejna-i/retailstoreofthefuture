@@ -20,6 +20,7 @@ class FocusEventProcessor:
         self._prediction_producer = prediction_producer
 
     async def process(self, message: str):
+        logger.info(f'Process focus (message: f{message}')
         try:
             focus_event = FocusEvent.parse_raw(message)
         except ValidationError as e:
@@ -28,7 +29,8 @@ class FocusEventProcessor:
             return
 
         # Get customer context
-        customer_context = await self._cache_reader.read_customer(focus_event.customer_id)
+        logger.debug(f"focus_event: {focus_event}")
+        customer_context = await self._cache_reader.read_customer(int(focus_event.customer_id))
         logger.debug(f'Got customer context: {customer_context}')
 
         # Get available coupons

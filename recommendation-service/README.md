@@ -277,13 +277,7 @@ curl -X 'POST' \
   'http://127.0.0.1:8000/mock_entry' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
-  -d '{
-  "event_type": "entry event",
-  "event_timestamp": "2021-03-18T08:29:02.160Z",
-  "payload": {
-    "customer_id": 3
-  }
-}'
+  -d '{"id": "127", "ts": 192322800}'
 ```
 
 or:
@@ -293,12 +287,5 @@ curl -X 'POST' \
   'http://127.0.0.1:8000/mock_focus' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
-  -d '{
-  "event_type": "focus event",
-  "event_timestamp": "2021-03-18T08:29:02.160Z",
-  "payload": {
-    "customer_id": 8,
-    "category": "Women" 
-  }
-}'
+  -d '{"id": "127", "ts": 192322800, "dep": "Boys"}'
 ```
