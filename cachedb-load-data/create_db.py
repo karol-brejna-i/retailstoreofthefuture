@@ -9,14 +9,14 @@ POSTGRES_PW = os.getenv('POSTGRES_PW', 'cachePass')
 POSTGRES_DB = os.getenv('POSTGRES_DB', 'cacheDb')
 POSTGRES_HST = os.getenv('POSTGRES_HST', 'localhost')
 DATA_PATH = os.getenv('DATA_PATH', 'data')
-DROP_DATABASE = os.getenv('DROP_DATABASE', 'False')
-DROP_DATABASE = DROP_DATABASE.lower() in ['1', 'yes', 'true']
+RECREATE_DATABASE = os.getenv('RECREATE_DATABASE', 'False')
+RECREATE_DATABASE = RECREATE_DATABASE.lower() in ['1', 'yes', 'true']
 # print out the values
 print(f"POSTGRES_USR: {POSTGRES_USR}")
 print(f"POSTGRES_PW: {POSTGRES_PW}")
 print(f"POSTGRES_DB: {POSTGRES_DB}")
 print(f"POSTGRES_HST: {POSTGRES_HST}")
-print(f"DROP_DATABASE: {DROP_DATABASE}")
+print(f"RECREATE_DATABASE: {RECREATE_DATABASE}")
 
 PRODUCT_INFO_TABLE_DDL = \
     """
@@ -144,11 +144,11 @@ if __name__ == '__main__':
     # connect to the default database
     db_connection = get_connection('postgres', POSTGRES_USR, POSTGRES_PW, POSTGRES_HST)
     print("Connection established")
-    if DROP_DATABASE:
+    if RECREATE_DATABASE:
         drop_all(db_connection)
 
-    create_database(db_connection)
-    print("Database created")
+        create_database(db_connection)
+        print("Database created")
 
     # connect to the database
     db_connection = get_connection(POSTGRES_DB, POSTGRES_USR, POSTGRES_PW, POSTGRES_HST)
