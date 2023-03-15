@@ -112,7 +112,7 @@ spec:
     type: Git
     git:
       uri: 'https://github.com/karol-brejna-i/retailstoreofthefuture.git'
-      ref: develop
+      ref: fix-recommendation-deployment
     contextDir: cachedb-load-data/
   strategy:
     type: Docker
