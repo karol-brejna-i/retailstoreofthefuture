@@ -8,7 +8,7 @@ spec:
     type: Git
     git:
       uri: 'https://github.com/karol-brejna-i/retailstoreofthefuture.git'
-      ref: develop
+      ref: fix-recommendation-deployment
     contextDir: recommendation-service/
   strategy:
     type: Docker
@@ -60,7 +60,7 @@ spec:
     type: Git
     git:
       uri: 'https://github.com/karol-brejna-i/retailstoreofthefuture.git'
-      ref: develop
+      ref: fix-recommendation-deployment
     contextDir: visualization-app/
   strategy:
     type: Docker
