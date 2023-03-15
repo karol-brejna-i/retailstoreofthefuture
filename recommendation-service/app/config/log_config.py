@@ -8,6 +8,7 @@ LOGGER_NAME = 'app.utils'
 
 assert LOG_LEVEL in ['DEBUG', 'INFO', 'WARNING', 'ERROR']
 
+logger.info(f"Configuring logger with LOG_LEVEL={LOG_LEVEL}")
 logging.basicConfig(format=LOG_FORMAT, level=LOG_LEVEL)
 
 # Basic console logger

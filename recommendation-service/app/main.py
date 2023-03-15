@@ -61,7 +61,7 @@ async def mock_focus_event(event: FocusEvent) -> Optional[str]:
     """
     Test endpoint that simulates arrival of "focus event".
     """
-    logger.info('mock_entry_event')
+    logger.info('mock_focus_event')
     logger.debug(event)
 
     result = await customer_focuses(None, config.FOCUS_TOPIC, event.json(by_alias=True).encode(), None, None)

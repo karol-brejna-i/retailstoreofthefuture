@@ -46,7 +46,7 @@ spec:
         {{- end }}
         {{- end }}
         - name: COUPON_SCORER_URL
-          value: {{ printf "http://%s:%s" (include "prediction.serviceName" .) (include "prediction.servicePort" .) | quote }}
+          value: {{ printf "http://%s:%s/score" (include "prediction.serviceName" .) (include "prediction.servicePort" .) | quote }}
         {{- if .Values.globalInfra.mqtt.brokerServer }}
         - name: MQTT_HOST
           value: {{  .Values.globalInfra.mqtt.brokerServer | quote }}

@@ -41,17 +41,14 @@ class FocusEventProcessor:
         scored_coupons = await self._prediction_service_client.get_prediction(customer_context, available_coupons)
 
         # Filter
-        scored_coupons = sorted(
-            scored_coupons, key=lambda p: -p.prediction)[:config.MAX_COUPONS_PER_CALL]
-        scored_coupons = list(
-            filter(lambda p: p.prediction > config.PREDICTION_THRESHOLD, scored_coupons))
+        scored_coupons = sorted(scored_coupons, key=lambda p: -p.prediction)[:config.MAX_COUPONS_PER_CALL]
+        scored_coupons = list(filter(lambda p: p.prediction > config.PREDICTION_THRESHOLD, scored_coupons))
 
         # for sc in scored_coupons:
         # Get products for the recommended coupon
         sc = scored_coupons[0]
         products = await self._cache_reader.read_products(coupon_id=sc.coupon_id)
-        coupon_info = next(
-            c for c in available_coupons if c.coupon_id == sc.coupon_id)
+        coupon_info = next(c for c in available_coupons if c.coupon_id == sc.coupon_id)
 
         # Emit prediction result event
         await self._prediction_producer.publish(
