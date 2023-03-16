@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "fepump.serviceName" . }}
+  labels:
+    {{- include "fepump.labels" . | nindent 4 }}
+spec:
+  type: {{  .Values.fepumpService.serviceType | default "ClusterIP "}}
+  ports:
+  - name: http
+    port: {{ include "fepump.servicePort" . }}
+    targetPort: 80
+  selector:
+    {{- include "fepump.selectorLabels" . | nindent 4 }}
