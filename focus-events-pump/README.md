@@ -15,6 +15,20 @@ The message payload is a JSON object with the following structure (see Recommend
 }
 ```
 
+Please, note that this implementation is not universal. It is tailored to the needs of the
+demo that uses predefined dataset (customers, coupons, etc.). The service assumes that the system operates on the same
+dataset that CacheDB loader uses. (see: [CacheDB loader data](../cachedb-load-data/data))
+
+Some of the characteristics of clients data are:
+* there are 1000 clients
+* ids of clients are integers from 1 to 1000
+
+This allows for great simplifications -- instead of choosing from the actual set of clients' ids, the service can simply
+generate random integers in the range [1, 1000].
+
+Also, the generated message format is "static", not configurable. Which is enough for this simple purpose.
+
+
 ## Usage
 
 This is a web service (implemented with FastAPI). By default, it works on port 8000.

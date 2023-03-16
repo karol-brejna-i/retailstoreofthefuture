@@ -23,7 +23,8 @@ TESTING_NO_POSTGRES = get_bool_env('TESTING_NO_POSTGRES', True)
 
 # TODO: read from env
 DEPARTMENTS = ['Women', 'Boys', 'Sport', 'Girls', 'Men']
-
+MIN_CUSTOMER_ID = int(os.getenv('MIN_CUSTOMER_ID', 1))
+MAX_CUSTOMER_ID = int(os.getenv('MAX_CUSTOMER_ID', 1000))
 PERIODIC_TASKS_INTERVAL = float(os.getenv('PERIODIC_TASKS_INTERVAL', 1.0))
 
 GENERATOR_AUTO_START = get_bool_env('GENERATOR_AUTO_START', True)
@@ -31,7 +32,6 @@ GENERATOR_AUTO_START = get_bool_env('GENERATOR_AUTO_START', True)
 HIDDEN_CONSTANTS_KEYS = ['DB_PASSWORD', 'MQTT_PASSWORD']
 
 dump_constants(logger.info, HIDDEN_CONSTANTS_KEYS)
-# dump_constants(print, hidden_keys)
 
 REQUIRED_PARAM_MESSAGE = 'Cannot read {} env variable. Please, make sure it is set before starting the service.'
 
