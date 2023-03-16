@@ -145,6 +145,7 @@ if __name__ == '__main__':
     db_connection = get_connection('postgres', POSTGRES_USR, POSTGRES_PW, POSTGRES_HST)
     print("Connection established")
     if RECREATE_DATABASE:
+        print("Recreating DB")
         drop_all(db_connection)
 
         create_database(db_connection)
