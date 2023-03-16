@@ -1,7 +1,4 @@
-import logging
-
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-
 from fastapi import FastAPI
 from fastapi.responses import PlainTextResponse
 
