@@ -1,5 +1,7 @@
 FROM bitnami/python:3.11
 
+EXPOSE 80
+
 WORKDIR /code
 
 COPY ./requirements.txt /code/requirements.txt
