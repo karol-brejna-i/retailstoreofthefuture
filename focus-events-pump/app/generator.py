@@ -4,6 +4,8 @@ from typing import Optional
 
 from pydantic import BaseModel, Field
 
+from app.config.config import MIN_CUSTOMER_ID, MAX_CUSTOMER_ID
+
 
 class FocusEvent(BaseModel):
     customer_id: str = Field(alias='id')
@@ -17,7 +19,7 @@ class FocusEventGenerator:
     def __init__(self, available_dep_list: list[str], pick_customer_func=None):
         self.available_dep_list = available_dep_list
         if pick_customer_func is None:
-            self.pick_customer_func = lambda: randint(1, 997)
+            self.pick_customer_func = lambda: randint(MIN_CUSTOMER_ID, MAX_CUSTOMER_ID)
         else:
             self.pick_customer_func = pick_customer_func
 
