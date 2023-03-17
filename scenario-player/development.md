@@ -34,7 +34,7 @@ The service reads the following **environment variables**:
 |----------------------------|---------------|---------------:|
 | STORE_HEIGHT               |               |             10 |
 | STORE_WIDTH                |               |              6 |
-| CUSTOMERS_AVERAGE_IN_STORE | 	          |              6 |
+| CUSTOMERS_AVERAGE_IN_STORE |               |              6 |
 | CUSTOMERS_LIST_FILE        |               |  customers.csv |
 | MQTT_HOST                  |               |              - |
 | MQTT_PORT                  |               |           1883 |

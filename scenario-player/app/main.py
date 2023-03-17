@@ -9,7 +9,6 @@ from fastapi.responses import PlainTextResponse
 from app import logger
 from app.backend.priority_queue import PQueueTimelineBackend
 from app.controller import TimelineController
-from app.log_config import configure_logger
 from app.publisher.mqtt_publisher import MQTTEventPublisher
 from app.scenario.scenario_deployer import ScenarioDeployer
 from app.scenario.scenario_model import Scenario, CustomerState

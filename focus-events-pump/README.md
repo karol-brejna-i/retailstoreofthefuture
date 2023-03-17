@@ -71,18 +71,18 @@ pip install -r requirements.txt
 
 The service reads the following **environment variables**:
 
-| Variable                | Description                          |         Default |
-|-------------------------|--------------------------------------|----------------:|
-| MQTT_HOST               | comma-separated list of MQTT brokers |               - |
-| MQTT_PORT               | MQTT brokers' port                   |            	  - |
-| MQTT_USERNAME           | MQTT user username                   |            None |
-| MQTT_PASSWORD           | MQTT user password                   |            None |
-| MQTT_BROKER_CERT_FILE   | path to MQTT ssl cert file           |            None |
-| FOCUS_TOPIC             | topic for focus events               |            	  - |
-| PERIODIC_TASKS_INTERVAL | repeat publication every n seconds   |            	  1 |
-| GENERATOR_AUTO_START    | start generating when the app starts |            True |
-| LOG_LEVEL               | logging level                        |            INFO |
-| LOG_FILENAME            | log file name                        |              '' |
+| Variable                | Description                          | Default |
+|-------------------------|--------------------------------------|--------:|
+| MQTT_HOST               | comma-separated list of MQTT brokers |       - |
+| MQTT_PORT               | MQTT brokers' port                   |    	  - |
+| MQTT_USERNAME           | MQTT user username                   |    None |
+| MQTT_PASSWORD           | MQTT user password                   |    None |
+| MQTT_BROKER_CERT_FILE   | path to MQTT ssl cert file           |    None |
+| FOCUS_TOPIC             | topic for focus events               |       - |
+| PERIODIC_TASKS_INTERVAL | repeat publication every n seconds   |       1 |
+| GENERATOR_AUTO_START    | start generating when the app starts |    True |
+| LOG_LEVEL               | logging level                        |    INFO |
+| LOG_FILENAME            | log file name                        |      '' |
 
 (Parameters with `-` in the "Default" column are required.)
 

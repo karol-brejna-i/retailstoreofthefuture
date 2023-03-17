@@ -193,8 +193,8 @@ The service reads the following **environment variables**:
 | MQTT_PASSWORD           | MQTT user password                   |    None |
 | MQTT_BROKER_CERT_FILE   | path to MQTT ssl cert file           |    None |
 | ENTER_TOPIC             | topic for entry events               |       - |
-| FOCUS_TOPIC             | topic for focus events               |    	  - |
-| COUPON_PREDICTION_TOPIC | topic for sending prediction results |    	  - |
+| FOCUS_TOPIC             | topic for focus events               |       - |
+| COUPON_PREDICTION_TOPIC | topic for sending prediction results |       - |
 | LOG_LEVEL               | logging level                        |    INFO |
 | LOG_FILENAME            | log file name                        |      '' |
 
