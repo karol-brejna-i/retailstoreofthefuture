@@ -16,8 +16,6 @@ from app.scenario.scenario_model import Scenario, CustomerState
 from app.scenario.scenario_producer import ScenarioProducer
 from app.simulator.simulation_engine import CustomerSimulator
 
-configure_logger()
-
 app = FastAPI()
 
 # For bigger scale and volume, use Redis backend
