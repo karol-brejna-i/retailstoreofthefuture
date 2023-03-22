@@ -123,10 +123,10 @@ async def phone(request: Request):
 @app.get('/api/assistance/{customer_id}', response_class=HTMLResponse)
 async def phone(request: Request, customer_id: int):
     """
-    Customer calls asistance
+    Customer calls assistance
     """
     logger.warn('THIS ENDPOINT DOES NOT SEND MQTT MESSAGE!')
-    logger.warn('THIS ENDPOINT DOES EVERYTHINK WHAT THIS APP WILL DO IF THE MESSAGE WOULD OCCURE')
+    logger.warn('THIS ENDPOINT DOES EVERYTHING WHAT THIS APP WILL DO IF THE MESSAGE WOULD OCCUR')
     EventsHandler.handle_event(CUSTOMER_BROWSING_TOPIC,
                                f'{{"id": "{customer_id}", "ts": "{int(time.time())}", "dep": "Unknown"}}', app.state)
     return PlainTextResponse('OK')
