@@ -243,7 +243,9 @@ decisionService:
     annotations: { }
 
 fepumpService:
-  # fepump service docker image
+  # decide if the service should be deployed
+  deploy: false
+
   image: image-registry.openshift-image-registry.svc:5000/rsotf/focus-events-pump:latest
 
   replicas: 1
@@ -254,8 +256,6 @@ fepumpService:
     env:
       - name: LOG_LEVEL
         value: info
-      - name: MAX_WORKERS
-        value: 1
 
   serviceAccount:
     create: true

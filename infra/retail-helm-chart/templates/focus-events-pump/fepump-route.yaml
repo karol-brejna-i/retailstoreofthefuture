@@ -1,3 +1,4 @@
+{{- if .Values.fepumpService.deploy -}}
 {{- if .Values.openshift -}}
 apiVersion: route.openshift.io/v1
 kind: Route
@@ -12,3 +13,5 @@ spec:
     kind: Service
     name: {{ include "fepump.serviceName" . }}
 {{ end }}
+{{- end -}}
+
