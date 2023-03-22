@@ -32,8 +32,10 @@ class RedisTimelineBackend(BaseTimelineBackend):
         logger.info("Connecting to Redis...")
         logger.info(f'{self.connection_url}, {self.database},{self.redis_password}')
         try:
-            self.redis = await aioredis.create_redis_pool(address=self.connection_url, db=self.database,
-                                                          password=self.redis_password, encoding='utf-8')
+            self.redis = aioredis.from_url(self.connection_url, db=self.database, password=self.redis_password,
+                                           encoding='utf-8') #, decode_responses=True)
+            # self.redis = await aioredis.create_redis_pool(address=self.connection_url, db=self.database,
+            #                                               password=self.redis_password, encoding='utf-8')
         except Exception as e:
             logger.error(f"Error while connecting to redis: {e}")
             logger.exception(e)
