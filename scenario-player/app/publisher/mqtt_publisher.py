@@ -1,10 +1,11 @@
+import ssl
+
 from fastapi import FastAPI
 from fastapi_mqtt import FastMQTT, MQTTConfig
-import ssl
 from gmqtt.mqtt.constants import MQTTv311
 
 from app import logger
-from app.config import TESTING_MOCK_MQTT, MQTT_HOST, MQTT_PORT, MQTT_NAME, MQTT_USERNAME, MQTT_PASSWORD,\
+from app.config import TESTING_MOCK_MQTT, MQTT_HOST, MQTT_PORT, MQTT_NAME, MQTT_USERNAME, MQTT_PASSWORD, \
     CUSTOMER_EXIT_TOPIC, CUSTOMER_MOVE_TOPIC, CUSTOMER_ENTER_TOPIC, MQTT_BROKER_CERT_FILE
 from app.publisher.base import BaseEventPublisher
 from app.publisher.mqtt_model import CustomerMoveEvent, CustomerEnterEvent, CustomerExitEvent

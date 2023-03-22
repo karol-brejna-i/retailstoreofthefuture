@@ -3,7 +3,7 @@ from typing import List, Tuple
 
 import aioredis
 
-from app import logger
+from app import logger, config
 from app.backend.base import BaseTimelineBackend
 from app.scenario.scenario_model import Scenario, Step, Location
 
@@ -56,6 +56,11 @@ class RedisTimelineBackend(BaseTimelineBackend):
         result = None
         try:
             scenario_key = f'{namespace}:{scenario.customer.customer_id}'
+
+            if config.SCENARIO_OVERWRITE:
+                logger.info(f'Overwriting scenario {scenario_key}')
+                await self.redis.delete(scenario_key)
+
             values = self.serialize_steps(scenario.path)
             length = len(values)
 

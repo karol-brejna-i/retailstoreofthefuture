@@ -10,6 +10,15 @@ STORE_WIDTH = int(os.getenv('STORE_WIDTH', 6))
 CUSTOMERS_AVERAGE_IN_STORE = int(os.getenv('CUSTOMERS_AVERAGE_IN_STORE', 6))
 CUSTOMERS_LIST_FILE = os.getenv('CUSTOMERS_LIST_FILE', 'customers.csv')
 
+# while persisting the scenario, overwrite the existing one
+# (otherwise new scenario steps will be appended to the existing one)
+# overriding is good for "real time" scenarios
+# on the other hand
+# if you plant to have different scenarios for a given user for different days/timeframes
+# then you should set this to False
+# Right now scenarios are identified by the user id
+SCENARIO_OVERWRITE = get_bool_env('SCENARIO_OVERWRITE', False)
+
 MQTT_HOST = os.getenv('MQTT_HOST')
 MQTT_PORT = int(os.getenv('MQTT_PORT', 1883))
 MQTT_NAME = os.getenv('MQTT_NAME', 'demoClient')
@@ -28,7 +37,6 @@ REDIS_HOST = os.getenv('REDIS_HOST')
 REDIS_PORT = int(os.getenv('REDIS_PORT', 6379))
 REDIS_DB = int(os.getenv('REDIS_DB', 0))
 REDIS_PASSWORD = os.getenv('REDIS_PASSWORD', None)
-
 
 HIDDEN_CONSTANTS_KEYS = ['MQTT_PASSWORD', 'REDIS_PASSWORD']
 dump_constants(logger.info, HIDDEN_CONSTANTS_KEYS)
