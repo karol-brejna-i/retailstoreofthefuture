@@ -33,7 +33,7 @@ class RedisTimelineBackend(BaseTimelineBackend):
         logger.info(f'{self.connection_url}, {self.database},{self.redis_password}')
         try:
             self.redis = aioredis.from_url(self.connection_url, db=self.database, password=self.redis_password,
-                                           encoding='utf-8') #, decode_responses=True)
+                                           encoding='utf-8', decode_responses=True)
             # self.redis = await aioredis.create_redis_pool(address=self.connection_url, db=self.database,
             #                                               password=self.redis_password, encoding='utf-8')
         except Exception as e:
@@ -105,8 +105,8 @@ class RedisTimelineBackend(BaseTimelineBackend):
 
         try:
             event_representation = self.marshall_event(customer_id, step)
-            logger.warning(f'marshalled event_representation: {event_representation}')
-            result = await self.redis.zadd(TIMELINE_KEY, int(step.timestamp.timestamp()), event_representation)
+            logger.debug(f'marshalled event_representation: {event_representation}')
+            result = await self.redis.zadd(TIMELINE_KEY, {event_representation: int(step.timestamp.timestamp())})
         except Exception as e:
             logger.error(f"Error while talking to redis: {e}")
             logger.exception(e)
@@ -125,6 +125,8 @@ class RedisTimelineBackend(BaseTimelineBackend):
             logger.info("events: " + str(events))
             result = [self.unmarshall_event(e) for e in events]
             mop = await self.redis.zremrangebyscore(TIMELINE_KEY, min=unix_time, max=unix_time)
+            if mop:
+                logger.debug(f'removed {mop} events from timeline')
         except Exception as e:
             logger.error(f"Error while talking to redis: {e}")
             logger.exception(e)
