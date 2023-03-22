@@ -3,7 +3,6 @@ import json
 import time
 import uuid
 
-# TODO random probably not used
 import requests
 from fastapi import FastAPI, Request, WebSocket
 from fastapi.responses import PlainTextResponse, HTMLResponse, JSONResponse
