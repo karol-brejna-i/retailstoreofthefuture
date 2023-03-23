@@ -38,7 +38,7 @@ The service reads the following **environment variables**:
 | CUSTOMERS_LIST_FILE        |               |  customers.csv |
 | MQTT_HOST                  |               |              - |
 | MQTT_PORT                  |               |           1883 |
-| MQTT_NAME                  |               |     demoClient |
+| MQTT_CLIENT_ID             |               |     demoClient |
 | ENTER_TOPIC                |               | customer/enter |
 | MOVE_TOPIC                 |               |  customer/move |
 | EXIT_TOPIC                 |               |  customer/exit |

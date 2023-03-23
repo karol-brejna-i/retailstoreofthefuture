@@ -65,7 +65,7 @@ class RedisTimelineBackend(BaseTimelineBackend):
             length = len(values)
 
             if length >= 1:
-                logger.info(f'Sending multiple values ... {values}')
+                logger.debug(f'Sending multiple values ... {values}')
                 result = await self.redis.rpush(scenario_key, *values)
 
                 result = scenario_key
@@ -124,12 +124,17 @@ class RedisTimelineBackend(BaseTimelineBackend):
         result = []
 
         try:
-            events = await self.redis.zrangebyscore(TIMELINE_KEY, min=unix_time, max=unix_time)
-            logger.info("events: " + str(events))
+            async with self.redis.pipeline(transaction=True) as pipe:
+                events, ok = await (
+                    pipe.zrangebyscore(TIMELINE_KEY, min=unix_time, max=unix_time)
+                        .zremrangebyscore(TIMELINE_KEY, min=unix_time, max=unix_time)
+                ).execute()
+
+            if ok:
+                logger.debug(f'removed {ok} events from timeline')
+                logger.debug(f'events: {events}')
             result = [self.unmarshall_event(e) for e in events]
-            mop = await self.redis.zremrangebyscore(TIMELINE_KEY, min=unix_time, max=unix_time)
-            if mop:
-                logger.debug(f'removed {mop} events from timeline')
+
         except Exception as e:
             logger.error(f"Error while talking to redis: {e}")
             logger.exception(e)

@@ -47,6 +47,7 @@ class TimelineController:
         events_for_users = await self.backend.get_events(epoch)
         logger.debug(f'events: {events_for_users}')
 
+
         customer_states = [CustomerSimulator.create_customer_state(efo[0], efo[1]) for efo in events_for_users]
 
         return customer_states

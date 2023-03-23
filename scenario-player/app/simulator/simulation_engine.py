@@ -44,3 +44,5 @@ class CustomerSimulator:
 
             # go to sleep
             await asyncio.sleep(1)
+            # TODO make the sleep time configurable
+            # TODO consider using a scheduler instead of sleep

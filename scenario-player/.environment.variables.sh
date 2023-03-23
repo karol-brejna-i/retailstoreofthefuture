@@ -3,11 +3,11 @@ export STORE_WIDTH=6
 export CUSTOMERS_AVERAGE_IN_STORE=6
 export CUSTOMERS_LIST_FILE='customers.csv'
 export MQTT_HOST='127.0.0.1'
-export MQTT_NAME=test1
+export MQTT_CLIENT_ID=test1
 
 export LOG_LEVEL=INFO
 
-export USE_REDIS_BACKEND=1
+export USE_REDIS_BACKEND=false
 export REDIS_HOST=127.0.0.1
 export REDIS_PORT=6379
 export REDIS_DB=0

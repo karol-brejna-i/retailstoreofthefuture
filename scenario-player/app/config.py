@@ -12,16 +12,11 @@ CUSTOMERS_LIST_FILE = os.getenv('CUSTOMERS_LIST_FILE', 'customers.csv')
 
 # while persisting the scenario, overwrite the existing one
 # (otherwise new scenario steps will be appended to the existing one)
-# overriding is good for "real time" scenarios
-# on the other hand
-# if you plant to have different scenarios for a given user for different days/timeframes
-# then you should set this to False
-# Right now scenarios are identified by the user id
-SCENARIO_OVERWRITE = get_bool_env('SCENARIO_OVERWRITE', False)
+SCENARIO_OVERWRITE = get_bool_env('SCENARIO_OVERWRITE', True)
 
 MQTT_HOST = os.getenv('MQTT_HOST')
 MQTT_PORT = int(os.getenv('MQTT_PORT', 1883))
-MQTT_NAME = os.getenv('MQTT_NAME', 'demoClient')
+MQTT_CLIENT_ID = os.getenv('MQTT_CLIENT_ID', 'demoClient')
 MQTT_USERNAME = os.getenv('MQTT_USERNAME', None)
 MQTT_PASSWORD = os.getenv('MQTT_PASSWORD', None)
 MQTT_BROKER_CERT_FILE = os.getenv('MQTT_BROKER_CERT_FILE', None)
