@@ -3,13 +3,18 @@ from typing import List, Tuple
 
 import aioredis
 
-from app import logger, config
+from app import logger, get_bool_env
 from app.backend.base import BaseTimelineBackend
 from app.scenario.scenario_model import Scenario, Step, Location
 
 TIMELINE_KEY = f'TIMELINE:CURRENT'
 SCENARIO_KEY = 'SCENARIO'
+# TODO consider datetime.datetime.fromisoformat (Python 3.7+) and datetime.datetime.isoformat
 TIMESTAMP_FORMAT = '%Y-%m-%d %H:%M:%S.%f%z'
+
+# while persisting the scenario, overwrite the existing one
+# (otherwise new scenario steps will be appended to the existing one)
+SCENARIO_OVERWRITE = get_bool_env('SCENARIO_OVERWRITE', True)
 
 
 class RedisTimelineBackend(BaseTimelineBackend):
@@ -25,10 +30,6 @@ class RedisTimelineBackend(BaseTimelineBackend):
         self.redis = None
 
     async def initialize(self):
-        """
-        Initialize the backend (for example, connect to the DB, etc.)
-        :return:
-        """
         logger.info("Connecting to Redis...")
         logger.info(f'{self.connection_url}, {self.database},{self.redis_password}')
         try:
@@ -57,7 +58,7 @@ class RedisTimelineBackend(BaseTimelineBackend):
         try:
             scenario_key = f'{namespace}:{scenario.customer.customer_id}'
 
-            if config.SCENARIO_OVERWRITE:
+            if SCENARIO_OVERWRITE:
                 logger.info(f'Overwriting scenario {scenario_key}')
                 await self.redis.delete(scenario_key)
 
@@ -116,18 +117,18 @@ class RedisTimelineBackend(BaseTimelineBackend):
 
         return result
 
-    async def get_events(self, unix_time: int) -> List[Tuple[str, Step]]:
+    async def get_events(self, unix_time: int, include_earlier: bool = True) -> List[Tuple[str, Step]]:
         logger.debug(f'get events from redis for timestamp {unix_time}')
         """
         Get events definitions for a given point in time
         """
         result = []
-
+        min = "-inf" if include_earlier else unix_time
         try:
             async with self.redis.pipeline(transaction=True) as pipe:
                 events, ok = await (
-                    pipe.zrangebyscore(TIMELINE_KEY, min=unix_time, max=unix_time)
-                        .zremrangebyscore(TIMELINE_KEY, min=unix_time, max=unix_time)
+                    pipe.zrangebyscore(TIMELINE_KEY, min=min, max=unix_time)
+                        .zremrangebyscore(TIMELINE_KEY, min=min, max=unix_time)
                 ).execute()
 
             if ok:

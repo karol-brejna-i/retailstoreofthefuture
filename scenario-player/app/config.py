@@ -10,10 +10,6 @@ STORE_WIDTH = int(os.getenv('STORE_WIDTH', 6))
 CUSTOMERS_AVERAGE_IN_STORE = int(os.getenv('CUSTOMERS_AVERAGE_IN_STORE', 6))
 CUSTOMERS_LIST_FILE = os.getenv('CUSTOMERS_LIST_FILE', 'customers.csv')
 
-# while persisting the scenario, overwrite the existing one
-# (otherwise new scenario steps will be appended to the existing one)
-SCENARIO_OVERWRITE = get_bool_env('SCENARIO_OVERWRITE', True)
-
 MQTT_HOST = os.getenv('MQTT_HOST')
 MQTT_PORT = int(os.getenv('MQTT_PORT', 1883))
 MQTT_CLIENT_ID = os.getenv('MQTT_CLIENT_ID', 'demoClient')
