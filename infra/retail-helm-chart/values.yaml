@@ -6,15 +6,14 @@
 openshift: true
 
 globalInfra:
-
-  namespace: rsotf
+  namespace: { { .Release.Namespace } }
   imageRegistry: image-registry.openshift-image-registry.svc
   registryPort: "5000"
 
   kafka:
     bootstrapServers:
       - retail-store-kafka-bootstrap.retail-infra.svc.cluster.local:9092
-    
+
     # Kafka topic name for entry events
     entryEventTopic: "entryTopic"
 
@@ -23,35 +22,35 @@ globalInfra:
 
     # Kafka topic name for prediction results
     couponPredictionTopic: "predictionTopic"
-  
+
   mqtt:
     # set to true if your MQTT broker uses SSL, default: false
     sslEnabled: false
 
-    # path to the file containing broker CA certificate in PEM format 
+    # path to the file containing broker CA certificate in PEM format
     # NOTE: files must be in the Chart directory. e.g. in files/ directory
     # sslBrokerCaCertPath: "files/broker.pem"
 
     # set to true if MQTT requires username, password authentication, default: false
     authenticationEnabled: false
-    
+
     # MQTT client username
     user: admin
     # MQTT client password
     password: password
 
-    # name or IP address of the MQTT broker 
+    # name or IP address of the MQTT broker
     brokerServer: ex-aao-mqtt-0-svc.retail-infra.svc.cluster.local
-    
+
     # port that MQTT broker is listening on, default: 1883
     brokerPort: 1883
 
     # MQTT topic for entering events
     enterTopic: "retail/mqttEntryTopic"
-    
+
     # MQTT topic for movement events
     moveTopic: "retail/mqttMovementTopic"
-    
+
     # MQTT topic for exit events
     exitTopic: "retail/mqttExitTopic"
 
@@ -64,39 +63,38 @@ globalInfra:
     # MQTT topic for prediction results
     couponsTopic: "retail/mqttCouponsTopic"
 
-
 postgres:
-  # postgres image used for cache 
+  # postgres image used for cache
   image: docker.io/bitnami/postgresql:15.2.0-debian-11-r0
 
-  # postgresql database user  
+  # postgresql database user
   postgresUser: cacheUser
 
   # postgresql user's password
   postgresPassword: cachePass
-  
+
   # postgresql database name
   postgresDB: cacheDb
 
   # postgresql service type, default: ClusterIP
   # serviceType: ClusterIP
 
-  # postgresql service port, default: 5432 
-  # servicePort: 5432 
+  # postgresql service port, default: 5432
+  # servicePort: 5432
 
   serviceAccount:
     # create separate service account for postgres
     create: true
     # additional service account annotations
-    annotations: { }
+    annotations: {}
 
   # specify limits and requests for the postgresql
-  resources: { }
+  resources: {}
 
 recommendationService:
   # recommendation service docker image
   image: "{{ .Values.globalInfra.imageRegistry }}:{{ .Values.globalInfra.registryPort }}/{{ .Values.globalInfra.namespace }}/recommendation-service:latest"
-  
+
   # number of recommendation service replicas
   replicas: 1
 
@@ -105,7 +103,7 @@ recommendationService:
 
   # recommendation service port. default: 80
   # servicePort: 8080
-  
+
   # fastAPI environment variables, see https://github.com/tiangolo/uvicorn-gunicorn-fastapi-docker for reference
   fastApi:
     env:
@@ -118,15 +116,15 @@ recommendationService:
     # create separate service account for recommendation service
     create: true
     # additional service account annotations
-    annotations: { }
-  
+    annotations: {}
+
   # specify limits and requests for the recommendation service
-  resources: { }
+  resources: {}
 
 predictionService:
   # prediction service docker image
   image: "{{ .Values.globalInfra.imageRegistry }}:{{ .Values.globalInfra.registryPort }}/{{ .Values.globalInfra.namespace }}/prediction-service:latest"
-  
+
   # number of prediction service replicas
   replicas: 1
 
@@ -134,7 +132,7 @@ predictionService:
   # serviceType: NodePort
 
   # prediction service port, default: 80
-  # servicePort: 8080 
+  # servicePort: 8080
 
   # fastAPI environment variables, see https://github.com/tiangolo/uvicorn-gunicorn-fastapi-docker for reference
   fastApi:
@@ -148,15 +146,15 @@ predictionService:
     # create separate service account for prediction service
     create: true
     # additional service account annotations
-    annotations: { }
+    annotations: {}
 
   # specify limits and requests for the prediction service
-  resources: { }
+  resources: {}
 
 customerSimulationService:
   # customer simulation service docker image
   image: "{{ .Values.globalInfra.imageRegistry }}:{{ .Values.globalInfra.registryPort }}/{{ .Values.globalInfra.namespace }}/customer-simulation-service:latest"
-  
+
   # number of customer simulations service replicas
   replicas: 1
 
@@ -176,12 +174,11 @@ customerSimulationService:
     # create separate service account for customer simulation service
     create: true
     # additional service account annotations
-    annotations: { }
-
+    annotations: {}
 
   # set a log level for customer simulation service
   logLevel: info
-  
+
   # override the default customer lit file location: /app/app/resources/customers.json
   # customersListFile: ""
 
@@ -189,7 +186,7 @@ customerSimulationService:
 visualization:
   # visualization simulation service docker image
   image: "{{ .Values.globalInfra.imageRegistry }}:{{ .Values.globalInfra.registryPort }}/{{ .Values.globalInfra.namespace }}/visualization-service:latest"
-  
+
   # visualization service type, default: ClusterIP
   # serviceType: ClusterIP
 
@@ -205,13 +202,13 @@ visualization:
 
   serviceAccount:
     create: true
-    annotations: { }
+    annotations: {}
 
 cachedbLoader:
   image: "{{ .Values.globalInfra.imageRegistry }}:{{ .Values.globalInfra.registryPort }}/{{ .Values.globalInfra.namespace }}/cachedb-loader"
   serviceAccount:
     create: true
-    annotations: { }
+    annotations: {}
 
 decisionService:
   # decision service docker image
@@ -240,4 +237,4 @@ decisionService:
     # create separate service account for decision service
     create: true
     # additional service account annotations
-    annotations: { }
+    annotations: {}
