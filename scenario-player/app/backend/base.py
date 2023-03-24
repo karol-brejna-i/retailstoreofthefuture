@@ -1,6 +1,6 @@
 from typing import List, Tuple
 
-from app.scenario.scenario_model import Scenario, Step
+from app.scenario.scenario_model import Scenario, Step, UtcDatetime
 
 
 class BaseTimelineBackend:
@@ -34,10 +34,10 @@ class BaseTimelineBackend:
         """
         raise NotImplementedError
 
-    async def get_events(self, unix_time: int) -> List[Tuple[str, Step]]:
+    async def get_events(self, timestamp: UtcDatetime) -> List[Tuple[str, Step]]:
         """
 
-        :param unix_time:
+        :param timestamp: timezone-aware datetime
         :return: list of tuples (customer_id, step)
         """
         raise NotImplementedError

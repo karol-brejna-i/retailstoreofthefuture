@@ -30,20 +30,21 @@ All the packages can be installed with:
 
 The service reads the following **environment variables**:
 
-| Variable                   | Description   |        Default |
-|----------------------------|---------------|---------------:|
-| STORE_HEIGHT               |               |             10 |
-| STORE_WIDTH                |               |              6 |
-| CUSTOMERS_AVERAGE_IN_STORE |               |              6 |
-| CUSTOMERS_LIST_FILE        |               |  customers.csv |
-| MQTT_HOST                  |               |              - |
-| MQTT_PORT                  |               |           1883 |
-| MQTT_CLIENT_ID             |               |     demoClient |
-| ENTER_TOPIC                |               | customer/enter |
-| MOVE_TOPIC                 |               |  customer/move |
-| EXIT_TOPIC                 |               |  customer/exit |
-| LOG_LEVEL                  | logging level |           INFO |
-| LOG_FILENAME               | log file name |             '' |
+| Variable                   | Description                                 |        Default |
+|----------------------------|---------------------------------------------|---------------:|
+| STORE_HEIGHT               | Unused                                      |             10 |
+| STORE_WIDTH                | Unused                                      |              6 |
+| CUSTOMERS_AVERAGE_IN_STORE | Unused                                      |              6 |
+| CUSTOMERS_LIST_FILE        | Unused                                      |  customers.csv |
+| MQTT_HOST                  |                                             |              - |
+| MQTT_PORT                  |                                             |           1883 |
+| MQTT_CLIENT_ID             |                                             |     demoClient |
+| ENTER_TOPIC                |                                             | customer/enter |
+| MOVE_TOPIC                 |                                             |  customer/move |
+| EXIT_TOPIC                 |                                             |  customer/exit |
+| LOG_LEVEL                  | logging level                               |           INFO |
+| LOG_FILENAME               | log file name                               |             '' |
+| PUBLISH_FREQUENCY          | how often check the timeline for events [s] |            1.0 |
 
 (Parameters with `-` in the "Default" column are required.)
 

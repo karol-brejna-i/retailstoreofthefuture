@@ -1,11 +1,11 @@
 from datetime import datetime
 from typing import List, Tuple
 
-import aioredis
+from redis import asyncio as aioredis
 
 from app import logger, get_bool_env
 from app.backend.base import BaseTimelineBackend
-from app.scenario.scenario_model import Scenario, Step, Location
+from app.scenario.scenario_model import Scenario, Step, Location, UtcDatetime
 
 TIMELINE_KEY = f'TIMELINE:CURRENT'
 SCENARIO_KEY = 'SCENARIO'
@@ -39,6 +39,10 @@ class RedisTimelineBackend(BaseTimelineBackend):
             logger.error(f"Error while connecting to redis: {e}")
             logger.exception(e)
             raise e
+
+    @staticmethod
+    def get_epoch_ms(timestamp: datetime):
+        return int(timestamp.timestamp() * 1000)
 
     ###
     # scenario related
@@ -110,25 +114,27 @@ class RedisTimelineBackend(BaseTimelineBackend):
         try:
             event_representation = self.marshall_event(customer_id, step)
             logger.debug(f'marshalled event_representation: {event_representation}')
-            result = await self.redis.zadd(TIMELINE_KEY, {event_representation: int(step.timestamp.timestamp())})
+            result = await self.redis.zadd(TIMELINE_KEY, {event_representation: self.get_epoch_ms(step.timestamp)})
         except Exception as e:
             logger.error(f"Error while talking to redis: {e}")
             logger.exception(e)
 
         return result
 
-    async def get_events(self, unix_time: int, include_earlier: bool = True) -> List[Tuple[str, Step]]:
-        logger.debug(f'get events from redis for timestamp {unix_time}')
+    async def get_events(self, timestamp: UtcDatetime, include_earlier: bool = True) -> List[Tuple[str, Step]]:
+        logger.debug(f'get events from redis for timestamp {timestamp}')
         """
         Get events definitions for a given point in time
         """
         result = []
-        min = "-inf" if include_earlier else unix_time
+        min = "-inf" if include_earlier else timestamp
+
+        epoch = self.get_epoch_ms(timestamp)
         try:
             async with self.redis.pipeline(transaction=True) as pipe:
                 events, ok = await (
-                    pipe.zrangebyscore(TIMELINE_KEY, min=min, max=unix_time)
-                        .zremrangebyscore(TIMELINE_KEY, min=min, max=unix_time)
+                    pipe.zrangebyscore(TIMELINE_KEY, min=min, max=epoch)
+                    .zremrangebyscore(TIMELINE_KEY, min=min, max=epoch)
                 ).execute()
 
             if ok:

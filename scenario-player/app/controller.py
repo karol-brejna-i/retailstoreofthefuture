@@ -43,8 +43,7 @@ class TimelineController:
 
     async def get_current_state(self, timestamp: datetime):
         logger.info(f'get_current_state({timestamp}):')
-        epoch = int(timestamp.timestamp())
-        events_for_users = await self.backend.get_events(epoch)
+        events_for_users = await self.backend.get_events(timestamp)
         logger.debug(f'events: {events_for_users}')
 
 

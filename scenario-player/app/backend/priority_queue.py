@@ -2,7 +2,7 @@ from queue import PriorityQueue
 from typing import List, Tuple
 
 from app import logger
-from app.scenario.scenario_model import Scenario, Step
+from app.scenario.scenario_model import Scenario, Step, UtcDatetime
 
 
 class PQueueTimelineBackend:
@@ -29,20 +29,21 @@ class PQueueTimelineBackend:
     def peek(self) -> Tuple[str, Step]:
         return self.timeline.queue[0] if len(self.timeline.queue) > 0 else None
 
-    async def get_events(self, unix_time: int, include_earlier: bool = False) -> List[Tuple[str, Step]]:
-        logger.debug(f'get events for timestamp {unix_time}')
+    async def get_events(self, timestamp: UtcDatetime, include_earlier: bool = False) -> List[Tuple[str, Step]]:
+        logger.debug(f'get events for timestamp {timestamp}')
         earliest_element = self.peek()
         logger.debug(f'earliest_element: {earliest_element}')
 
+        epoch = int(timestamp.timestamp() * 1000)
         result = []
         # proceed, if the next element in the queue is "old enough" for our query
-        if earliest_element and earliest_element[0] <= unix_time:
+        if earliest_element and earliest_element[0] <= epoch:
             # consume elements until we reach desired timestamp
             while True:
                 element = self.timeline.get_nowait()
                 print(element)
                 print(type(element))
-                if element[0] < unix_time:
+                if element[0] < timestamp:
                     if include_earlier:
                         result.append(element[1])
                 else:
@@ -50,7 +51,7 @@ class PQueueTimelineBackend:
 
                 earliest_element = self.peek()
                 # if there is no elements left or if the next element is too new, break
-                if not earliest_element or earliest_element[0] > unix_time:
+                if not earliest_element or earliest_element[0] > epoch:
                     break
 
         return result
