@@ -16,13 +16,28 @@ TIMESTAMP_FORMAT = '%Y-%m-%d %H:%M:%S.%f%z'
 # (otherwise new scenario steps will be appended to the existing one)
 SCENARIO_OVERWRITE = get_bool_env('SCENARIO_OVERWRITE', True)
 
+TIMELINE_FUNCTIONS = """\
+#!lua name=timeline
+local function get_elements(keys, args)
+    local key = keys[1]
+    local min_score = args[1]
+    local max_score = args[2]
+    local n = args[3]
+    redis.log(redis.LOG_DEBUG, 'get_elements: ' .. key .. ' ' .. min_score .. ' ' .. max_score .. ' ' .. n)
+    local elements = redis.call('ZRANGEBYSCORE', key, min_score, max_score, 'LIMIT', 0, n)
+    if #elements > 0 then
+        redis.log(redis.LOG_DEBUG, 'get_elements: removing ' .. #elements .. ' elements')
+        redis.call('ZREM', key, unpack(elements))
+    end
+    return elements
+end
+redis.register_function('get_elements', get_elements)
+"""
+
 
 class RedisTimelineBackend(BaseTimelineBackend):
 
     def __init__(self, connection_url: str = 'redis://localhost', database: int = 0, redis_password: str = None):
-        """
-        Initialize internal fields.
-        """
         super().__init__()
         self.connection_url = connection_url
         self.database = database
@@ -35,6 +50,15 @@ class RedisTimelineBackend(BaseTimelineBackend):
         try:
             self.redis = aioredis.from_url(self.connection_url, db=self.database, password=self.redis_password,
                                            encoding='utf-8', decode_responses=True)
+
+            # check if the server has the timeline module loaded
+            modules = await self.redis.function_list()
+            found = next((True for module in modules if 'timeline' in module), False)
+            if not found:
+                logger.warning(f"Redis module 'timeline' not found. Attempting to load it here.")
+                module = await self.redis.function_load(TIMELINE_FUNCTIONS, replace=True)
+                logger.info(f"Redis module loaded: {module}")
+
         except Exception as e:
             logger.error(f"Error while connecting to redis: {e}")
             logger.exception(e)
@@ -121,30 +145,19 @@ class RedisTimelineBackend(BaseTimelineBackend):
 
         return result
 
-    async def get_events(self, timestamp: UtcDatetime, include_earlier: bool = True) -> List[Tuple[str, Step]]:
-        logger.debug(f'get events from redis for timestamp {timestamp}')
+    async def get_events(self, for_timestamp: UtcDatetime, from_timestamp: UtcDatetime,
+                         batch_size: int) -> List[Tuple[str, Step]]:
+        logger.debug(f'get events from redis for timestamp {for_timestamp} (from {from_timestamp})')
         """
         Get events definitions for a given point in time
         """
         result = []
-        min = "-inf" if include_earlier else timestamp
-
-        epoch = self.get_epoch_ms(timestamp)
-        try:
-            async with self.redis.pipeline(transaction=True) as pipe:
-                events, ok = await (
-                    pipe.zrangebyscore(TIMELINE_KEY, min=min, max=epoch)
-                    .zremrangebyscore(TIMELINE_KEY, min=min, max=epoch)
-                ).execute()
-
-            if ok:
-                logger.debug(f'removed {ok} events from timeline')
-                logger.debug(f'events: {events}')
+        min = self.get_epoch_ms(from_timestamp)
+        epoch = self.get_epoch_ms(for_timestamp)
+        events = await self.redis.fcall('get_elements', 1, TIMELINE_KEY, min, epoch, batch_size)
+        if events:
+            logger.debug(f'removed {len(events)} events from timeline')
+            logger.debug(f'events: {events}')
             result = [self.unmarshall_event(e) for e in events]
-
-        except Exception as e:
-            logger.error(f"Error while talking to redis: {e}")
-            logger.exception(e)
-            logger.error(type(e))
 
         return result

@@ -1,15 +1,26 @@
 import os
+from datetime import timezone, datetime
 
 from app import logger, validate_and_crash, get_bool_env, dump_constants
 
 logger.info('Reading environment variables...')
+
 
 STORE_HEIGHT = int(os.getenv('STORE_HEIGHT', 10))
 STORE_WIDTH = int(os.getenv('STORE_WIDTH', 6))
 CUSTOMERS_AVERAGE_IN_STORE = int(os.getenv('CUSTOMERS_AVERAGE_IN_STORE', 6))
 CUSTOMERS_LIST_FILE = os.getenv('CUSTOMERS_LIST_FILE', 'customers.csv')
 
-PUBLISH_FREQUENCY = float(os.getenv('PUBLISH_FREQUENCY', 1.0))
+CONSUME_FREQUENCY = float(os.getenv('CONSUME_FREQUENCY', 1.0))
+CONSUME_BATCH_SIZE = int(os.getenv('CONSUME_BATCH_SIZE', 10))
+CONSUME_FROM = os.getenv('CONSUME_FROM', 'LATEST').upper()
+match CONSUME_FROM:
+    case 'EARLIEST':
+        CONSUME_FROM = datetime.fromtimestamp(0, timezone.utc)
+    case 'LATEST':
+        CONSUME_FROM = datetime.now(timezone.utc)
+    case _:
+        CONSUME_FROM = datetime.fromisoformat(CONSUME_FROM)
 
 MQTT_HOST = os.getenv('MQTT_HOST')
 MQTT_PORT = int(os.getenv('MQTT_PORT', 1883))

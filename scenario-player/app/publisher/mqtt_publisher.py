@@ -55,7 +55,7 @@ else:
             self.fast_mqtt = FastMQTT(config=mqtt_config, client_id=client_id)
 
         def publish(self, topic, message):
-            logger.info(f' publishing to {topic}. message: {message}')
+            logger.debug(f' publishing to {topic}. message: {message}')
             return self.fast_mqtt.publish(topic, message)
 
         async def connect(self):

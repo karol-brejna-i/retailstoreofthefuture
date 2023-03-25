@@ -34,10 +34,12 @@ class BaseTimelineBackend:
         """
         raise NotImplementedError
 
-    async def get_events(self, timestamp: UtcDatetime) -> List[Tuple[str, Step]]:
+    async def get_events(self, for_timestamp: UtcDatetime, from_timestamp: UtcDatetime, batch_size: int) -> List[Tuple[str, Step]]:
         """
 
-        :param timestamp: timezone-aware datetime
+        :param for_timestamp: timezone-aware datetime
+        :param from_timestamp: timezone-aware datetime
+        :param batch_size: number of events to return in one go
         :return: list of tuples (customer_id, step)
         """
         raise NotImplementedError

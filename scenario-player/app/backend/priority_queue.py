@@ -29,12 +29,12 @@ class PQueueTimelineBackend:
     def peek(self) -> Tuple[str, Step]:
         return self.timeline.queue[0] if len(self.timeline.queue) > 0 else None
 
-    async def get_events(self, timestamp: UtcDatetime, include_earlier: bool = False) -> List[Tuple[str, Step]]:
-        logger.debug(f'get events for timestamp {timestamp}')
+    async def get_events(self, for_timestamp: UtcDatetime, include_earlier: bool = False) -> List[Tuple[str, Step]]:
+        logger.debug(f'get events for timestamp {for_timestamp}')
         earliest_element = self.peek()
         logger.debug(f'earliest_element: {earliest_element}')
 
-        epoch = int(timestamp.timestamp() * 1000)
+        epoch = int(for_timestamp.timestamp() * 1000)
         result = []
         # proceed, if the next element in the queue is "old enough" for our query
         if earliest_element and earliest_element[0] <= epoch:
@@ -43,7 +43,7 @@ class PQueueTimelineBackend:
                 element = self.timeline.get_nowait()
                 print(element)
                 print(type(element))
-                if element[0] < timestamp:
+                if element[0] < for_timestamp:
                     if include_earlier:
                         result.append(element[1])
                 else:
