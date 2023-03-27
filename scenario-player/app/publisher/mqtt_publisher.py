@@ -129,7 +129,6 @@ class MQTTEventPublisher(BaseEventPublisher):
 
     async def publish_state(self, customer_state: CustomerState):
         logger.debug('publish_state')
-        logger.debug(customer_state)
         topic = self.get_topic_for_event_type(customer_state.status)
         logger.debug(f'Publishing {customer_state} to {topic} topic')
         message = self.prepare_payload(customer_state)
