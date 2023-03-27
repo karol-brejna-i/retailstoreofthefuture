@@ -64,10 +64,6 @@ class RedisTimelineBackend(BaseTimelineBackend):
             logger.exception(e)
             raise e
 
-    @staticmethod
-    def get_epoch_ms(timestamp: datetime):
-        return int(timestamp.timestamp() * 1000)
-
     ###
     # scenario related
     #

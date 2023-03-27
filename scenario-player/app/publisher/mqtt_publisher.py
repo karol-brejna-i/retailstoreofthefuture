@@ -21,7 +21,7 @@ MAP = {
 if TESTING_MOCK_MQTT:
     class MQTTClient:
         def __init__(self, app: FastAPI, mqtt_host: str, mqtt_port: int, mqtt_client_name: str):
-            logger.info(f'simulating a client to {mqtt_host}')
+            logger.warning(f'simulating an MQTT client to {mqtt_host}')
             self.mqtt_client_name = mqtt_client_name
             self.mqtt_host = mqtt_host
             self.mqtt_port = mqtt_port
@@ -31,6 +31,9 @@ if TESTING_MOCK_MQTT:
             logger.info(f'simulated publishing to {topic}. message: {message}')
 
         async def connect(self):
+            pass
+
+        async def set_connection_handlers(self, user_connect_handler, on_disconnect):
             pass
 else:
     class MQTTClient:
@@ -64,6 +67,10 @@ else:
             self.fast_mqtt.init_app(self.app)
             logger.info("after connect")
 
+        async def set_connection_handlers(self, user_connect_handler, on_disconnect):
+            self.fast_mqtt.user_connect_handler = user_connect_handler
+            self.fast_mqtt.client.on_disconnect = on_disconnect
+
 
 class MQTTEventMarshaller(object):
     @staticmethod
@@ -91,8 +98,7 @@ class MQTTEventPublisher(BaseEventPublisher):
 
     async def initialize(self):
         logger.info('Initializing MQTT connection')
-        self.client.fast_mqtt.user_connect_handler = MQTTEventPublisher.on_connect
-        self.client.fast_mqtt.client.on_disconnect = MQTTEventPublisher.on_disconnect
+        await self.client.set_connection_handlers(MQTTEventPublisher.on_connect, MQTTEventPublisher.on_disconnect)
 
         await self.client.connect()
 

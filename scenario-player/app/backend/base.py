@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import List, Tuple
 
 from app.scenario.scenario_model import Scenario, Step, UtcDatetime
@@ -33,6 +34,10 @@ class BaseTimelineBackend:
         :return:
         """
         raise NotImplementedError
+
+    @staticmethod
+    def get_epoch_ms(timestamp: datetime):
+        return int(timestamp.timestamp() * 1000)
 
     async def get_events(self, for_timestamp: UtcDatetime, from_timestamp: UtcDatetime, batch_size: int) -> List[Tuple[str, Step]]:
         """
