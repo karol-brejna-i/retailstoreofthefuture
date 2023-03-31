@@ -3,11 +3,11 @@ import uuid
 
 from fastapi import FastAPI
 from fastapi_mqtt import FastMQTT, MQTTConfig
-from gmqtt.mqtt.constants import MQTTv311
+from gmqtt.mqtt.constants import MQTTv311, MQTTv50
 
 from app import logger
 from app.config import TESTING_MOCK_MQTT, MQTT_HOST, MQTT_PORT, MQTT_CLIENT_ID, MQTT_USERNAME, MQTT_PASSWORD, \
-    CUSTOMER_EXIT_TOPIC, CUSTOMER_MOVE_TOPIC, CUSTOMER_ENTER_TOPIC, MQTT_BROKER_CERT_FILE
+    CUSTOMER_EXIT_TOPIC, CUSTOMER_MOVE_TOPIC, CUSTOMER_ENTER_TOPIC, MQTT_BROKER_CERT_FILE, MQTT_PROTOCOL_VERSION
 from app.publisher.base import BaseEventPublisher
 from app.publisher.mqtt_model import CustomerMoveEvent, CustomerEnterEvent, CustomerExitEvent
 from app.scenario.scenario_model import CustomerState, STEP_TYPE_ENTER, STEP_TYPE_MOVE, STEP_TYPE_EXIT
@@ -51,10 +51,11 @@ else:
                 context = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
                 context.load_verify_locations(MQTT_BROKER_CERT_FILE)
 
+            protocol_version = MQTTv311 if MQTT_PROTOCOL_VERSION == 'MQTTv311' else MQTTv50
             # use unique postfix in case of many instances of the same service
             client_id = f'{self.mqtt_client_name}_{uuid.uuid4()}'
-            mqtt_config = MQTTConfig(host=self.mqtt_host, port=self.mqtt_port,
-                                     username=MQTT_USERNAME, password=MQTT_PASSWORD, version=MQTTv311, ssl=context)
+            mqtt_config = MQTTConfig(host=self.mqtt_host, port=self.mqtt_port, username=MQTT_USERNAME,
+                                     password=MQTT_PASSWORD, version=protocol_version, ssl=context)
             self.fast_mqtt = FastMQTT(config=mqtt_config, client_id=client_id)
 
         def publish(self, topic, message):

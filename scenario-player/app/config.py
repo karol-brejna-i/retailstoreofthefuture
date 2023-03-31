@@ -28,6 +28,8 @@ MQTT_CLIENT_ID = os.getenv('MQTT_CLIENT_ID', 'demoClient')
 MQTT_USERNAME = os.getenv('MQTT_USERNAME', None)
 MQTT_PASSWORD = os.getenv('MQTT_PASSWORD', None)
 MQTT_BROKER_CERT_FILE = os.getenv('MQTT_BROKER_CERT_FILE', None)
+# use 'MQTTv311' if your broker does not support MQTTv5
+MQTT_PROTOCOL_VERSION = os.getenv('MQTT_PROTOCOL_VERSION', 'MQTTv5')
 
 CUSTOMER_ENTER_TOPIC = os.getenv('ENTER_TOPIC', 'customer/enter')
 CUSTOMER_EXIT_TOPIC = os.getenv('EXIT_TOPIC', 'customer/exit')
