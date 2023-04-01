@@ -3,7 +3,9 @@ import ssl
 from fastapi_mqtt import MQTTConfig, FastMQTT
 from gmqtt.mqtt.constants import MQTTv311, MQTTv50
 
-from app import logger, config
+from app import logger
+from app.config import MQTT_HOST, MQTT_PORT, MQTT_USERNAME, MQTT_BROKER_CERT_FILE, MQTT_PROTOCOL_VERSION, MQTT_PASSWORD, \
+    MQTT_CLIENT_ID
 
 
 def find_customer(customer_id, customers):
@@ -19,20 +21,20 @@ def find_customer(customer_id, customers):
 
 
 def initialize_mqtt(fastapi_app):
-    logger.info(f'MQTT host: {config.MQTT_HOST}:{config.MQTT_PORT} | user: {config.MQTT_USERNAME}')
+    logger.info(f'MQTT host: {MQTT_HOST}:{MQTT_PORT} | user: {MQTT_USERNAME}')
     context = False
-    if config.MQTT_BROKER_CERT_FILE is not None:
+    if MQTT_BROKER_CERT_FILE is not None:
         context = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
-        context.load_verify_locations(config.MQTT_BROKER_CERT_FILE)
-    protocol_version = MQTTv311 if config.MQTT_PROTOCOL_VERSION == 'MQTTv311' else MQTTv50
+        context.load_verify_locations(MQTT_BROKER_CERT_FILE)
+    protocol_version = MQTTv311 if MQTT_PROTOCOL_VERSION == 'MQTTv311' else MQTTv50
     mqtt_config = MQTTConfig(
-        host=config.MQTT_HOST,
-        port=config.MQTT_PORT,
-        username=config.MQTT_USERNAME,
-        password=config.MQTT_PASSWORD,
+        host=MQTT_HOST,
+        port=MQTT_PORT,
+        username=MQTT_USERNAME,
+        password=MQTT_PASSWORD,
         version=protocol_version,
         ssl=context)
-    mqtt = FastMQTT(config=mqtt_config)
+    mqtt = FastMQTT(config=mqtt_config, client_id=MQTT_CLIENT_ID)
     mqtt.init_app(fastapi_app)
 
     return mqtt
