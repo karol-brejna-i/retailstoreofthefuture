@@ -7,7 +7,7 @@ metadata:
   name: {{ include "fepump.name" . }}
 
 spec:
-  replicas: {{ .Values.predictionService.replicas }}
+  replicas: {{ .Values.fepumpService.replicas }}
   selector:
     matchLabels:
       {{- include "fepump.selectorLabels" . | nindent 6 }}
@@ -19,7 +19,7 @@ spec:
       serviceAccount: {{include "fepump.serviceAccountName" . }}
       containers:
       - name: fepump-service
-        image: {{ .Values.fepumpService.image }}
+        image: {{ tpl .Values.fepumpService.image . }}
         env:
         - name: DB_NAME
           valueFrom:
