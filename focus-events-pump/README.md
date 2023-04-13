@@ -53,6 +53,7 @@ The service exposes the following HTTP endpoints:
 | GET    | /healthcheck | can be used for liveness probe |
 | POST   | /start       | start message publications     |
 | POST   | /stop        | pause message publications     |
+| GET    | /state       | check generator status         |
 
 ## Development
 
