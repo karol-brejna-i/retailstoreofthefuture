@@ -75,7 +75,7 @@ The service reads the following **environment variables**:
 | Variable                | Description                          | Default |
 |-------------------------|--------------------------------------|--------:|
 | MQTT_HOST               | comma-separated list of MQTT brokers |       - |
-| MQTT_PORT               | MQTT brokers' port                   |    	  - |
+| MQTT_PORT               | MQTT brokers' port                   |    1883 |
 | MQTT_USERNAME           | MQTT user username                   |    None |
 | MQTT_PASSWORD           | MQTT user password                   |    None |
 | MQTT_BROKER_CERT_FILE   | path to MQTT ssl cert file           |    None |

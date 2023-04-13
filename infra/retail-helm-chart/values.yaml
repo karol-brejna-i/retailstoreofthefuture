@@ -259,6 +259,8 @@ fepumpService:
     env:
       - name: GENERATOR_AUTO_START
         value: false
+      - name: PERIODIC_TASKS_INTERVAL
+        value: 1.0
 
   serviceAccount:
     create: true
