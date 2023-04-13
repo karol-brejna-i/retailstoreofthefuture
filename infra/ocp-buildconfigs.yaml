@@ -211,7 +211,7 @@ spec:
     type: Git
     git:
       uri: 'https://github.com/karol-brejna-i/retailstoreofthefuture.git'
-      ref: focus-events-pump-helm
+      ref: develop
     contextDir: focus-events-pump/
   strategy:
     type: Docker
