@@ -23,8 +23,8 @@ def show_banner(logger_func, lines: str | list[str]):
     logger_func('#' * 64)
     if isinstance(lines, str):
         lines = [lines]
-    for l in lines:
-        logger_func(f'# {l}')
+    for line in lines:
+        logger_func(f'# {line}')
     logger_func('#' * 64)
 
 

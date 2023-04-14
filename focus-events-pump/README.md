@@ -59,7 +59,7 @@ The service exposes the following HTTP endpoints:
 
 Dependencies of the project are contained in [requirements.txt](requirements.txt) file. All the packages are publicly
 available.
-For development, it may be convenient to have a dedicated virtual environment (Python 3.8+, all the dependencies
+For development, it may be convenient to have a dedicated virtual environment (Python 3.11+, all the dependencies
 installed there).
 
 ```bash
@@ -68,7 +68,7 @@ python3 -m venv venv
 pip install -r requirements.txt
 ```
 
-### Service configuration
+## Service configuration
 
 The service reads the following **environment variables**:
 
@@ -89,6 +89,19 @@ The service reads the following **environment variables**:
 
 Use env variables [log_config.py](./app/config/log_config.py) to **configure logging behaviour**.
 By default, console is used for logging. File handler is added if `LOG_FILENAME` is provided.
+
+**GENERATOR_AUTO_START** value decides whether the service starts generating messages right after it is started.
+For example, if we want to run the as a Kubernetes job with multiple pods, we can set `GENERATOR_AUTO_START` to
+'True'. The pods will start generating messages right after they are started. 
+On the contrary, if we want to be able to decide, when the service starts generating messages, we can set `GENERATOR_AUTO_START`
+to `False` and then send a POST request to `/start` endpoint.
+
+**PERIODIC_TASKS_INTERVAL** is the interval (in seconds) between message publications. The lower the value, the more
+messages are generated in a given time period. You can use this parameter to control the load on the system. 
+There is a practical limit though. The service uses a background task to generate messages. If the task takes longer 
+to complete than the defined period, the next task will be scheduled to run immediately after the previous one.
+To increase the load, you can run multiple instances of the service, then.
+
 
 ## Running the service
 

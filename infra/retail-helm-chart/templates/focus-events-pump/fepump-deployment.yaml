@@ -60,17 +60,9 @@ spec:
         - name: MQTT_PORT
           value: {{  .Values.globalInfra.mqtt.brokerPort  | quote }}
         {{- end }}
-        {{- if .Values.globalInfra.mqtt.enterTopic }}
-        - name: ENTER_TOPIC
-          value: {{  .Values.globalInfra.mqtt.enterTopic | quote }}
-        {{- end }}
         {{- if .Values.globalInfra.mqtt.focusTopic }}
         - name: FOCUS_TOPIC
           value: {{  .Values.globalInfra.mqtt.focusTopic | quote }}
-        {{- end }}
-        {{- if .Values.globalInfra.mqtt.couponsTopic }}
-        - name: COUPON_PREDICTION_TOPIC
-          value: {{  .Values.globalInfra.mqtt.couponsTopic | quote }}
         {{- end }}
         {{- if .Values.globalInfra.mqtt.sslEnabled }}
         - name: MQTT_BROKER_CERT_FILE
